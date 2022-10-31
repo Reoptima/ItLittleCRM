@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+  pg_db_all:
+    image: postgres:latest
+    container_name: pg_db_all
+    restart: always
+    environment:
+      POSTGRES_USER: Reoptima
+      POSTGRES_PASSWORD: R5714
+      PGADMIN_DEFAULT_PASSWORD: a1228f19-e6f7-4e93-a3df-6d4df6031abc
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+  pgadmin4:
+      image: dpage/pgadmin4
+      container_name: pgadmin4
+      restart: always
+      environment:
+        PGADMIN_DEFAULT_EMAIL: reoptima@gmail.com
+        PGADMIN_DEFAULT_PASSWORD: a1228f19-e6f7-4j93-a3df-7d4db6031abc
+      ports:
+        - "8080:80"
+
+volumes:
+  db-data:
