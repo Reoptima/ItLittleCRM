@@ -1,7 +1,10 @@
 package com.example.itlittlecrm.controller;
 
+import com.example.itlittlecrm.models.Projects;
 import com.example.itlittlecrm.models.Team;
 import com.example.itlittlecrm.models.User;
+import com.example.itlittlecrm.repo.ProductsRepository;
+import com.example.itlittlecrm.repo.ProjectRepository;
 import com.example.itlittlecrm.repo.TeamRepository;
 import com.example.itlittlecrm.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +27,17 @@ public class TeamController {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    ProjectRepository projectRepository;
+
     @GetMapping("/team")
 
     public String teamMain(Model model) {
         Iterable<Team> teams = teamRepository.findAll();
+        Iterable<Projects> projects = projectRepository.findAll();
         model.addAttribute("users", userRepository.findAll());
         model.addAttribute("teams", teams);
+        model.addAttribute("projects", projects);
         return "Team/team-main";
     }
 
@@ -41,9 +49,11 @@ public class TeamController {
     private String getString(Model model) {
         Iterable<Team> teams = teamRepository.findAll();
         Iterable<User> users = userRepository.findAll();
+        Iterable<Projects> projects = projectRepository.findAll();
         model.addAttribute("teams", teams);
         model.addAttribute("users", users);
-        return "team/team-add";
+        model.addAttribute("projects", projects);
+        return "Team/team-add";
     }
 
     @PostMapping("/team/add")
@@ -73,17 +83,18 @@ public class TeamController {
     }
 
     @GetMapping("/team/{team}/edit")
-    public String teamEdit(@PathVariable(value = "id") long id, Model model) {
-        if (teamDetails(id, model)) {
-            return "redirect:/team";
-        }
-        return "team/team-edit";
+    public String teamEdit(Model model, Team team) {
+        Iterable<User> users = userRepository.findAll();
+        Iterable<Projects> projects = projectRepository.findAll();
+        model.addAttribute("users", users);
+        model.addAttribute("projects", projects);
+        return "Team/team-edit";
     }
 
     @PostMapping("/team/{id}/edit")
     public String teamPostEdit(@ModelAttribute("team") @Valid Team team, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            return "team/team-edit";
+            return "Team/team-edit";
         }
         teamRepository.save(team);
         return "redirect:/team";

@@ -16,7 +16,7 @@ public class Team {
 
     @ManyToOne
     @JoinColumn(name = "project_id")
-    private Projects project;
+    private Projects projects;
 
     @Id
     @GeneratedValue
@@ -32,12 +32,12 @@ public class Team {
         this.users = users;
     }
 
-    public Projects getProject() {
-        return project;
+    public Projects getProjects() {
+        return projects;
     }
 
-    public void setProject(Projects project1) {
-        this.project = project1;
+    public void setProjects(Projects projects) {
+        this.projects = projects;
     }
 
     public Long getId() {
@@ -55,6 +55,4 @@ public class Team {
     public void setTeamName(String teamName) {
         this.teamName = teamName;
     }
-
-
 }

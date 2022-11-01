@@ -29,18 +29,17 @@
                     <a href="#" class="block py-2 pr-4 pl-3 text-blue-600 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0" aria-current="page">Home</a>
                 </li>
                 <li>
-                    <a sec:authorize="hasAnyAuthority('ADMIN')" href="/user" class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0">User</a>
+                    <a sec:authorize="hasAnyAuthority('USER')" href="/user" class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0">User</a>
                 </li>
                 <li>
-                    <a sec:authorize="hasAnyAuthority('USER')" href="/blog" class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0">blog</a>
+                    <a sec:authorize="hasAnyAuthority('USER')" href="/team" class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0">team</a>
                 </li>
                 <li>
-                    <a href="/city" class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0">Cities</a>
+                    <a href="/project" class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0">Project</a>
                 </li>
                 <li>
                     <a sec:authorize="hasAnyAuthority('USER')" href="/work" class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0">Works</a>
                 </li>
-
             </ul>
         </div>
     </div>

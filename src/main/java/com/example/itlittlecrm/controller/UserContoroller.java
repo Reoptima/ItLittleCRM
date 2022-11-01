@@ -12,8 +12,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("")
@@ -80,7 +78,7 @@ public class UserContoroller {
     }*/
 
     @GetMapping("/user/{user}/edit")
-    public String userEdit(User user, Model model) {
+    public String userEdit(Model model, @PathVariable String user) {
         Iterable<Team> teams = teamRepository.findAll();
         model.addAttribute("teams", teams);
         return "User/user-edit";
