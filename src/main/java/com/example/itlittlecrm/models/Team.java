@@ -1,6 +1,7 @@
 package com.example.itlittlecrm.models;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -8,9 +9,9 @@ public class Team {
 
     @ManyToMany
     @JoinTable(name = "team_user",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "team_id"))
-    public Set<Team> teams;
+            joinColumns = @JoinColumn(name = "team_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    public List<User> users;
 
 
     @ManyToOne
@@ -23,12 +24,12 @@ public class Team {
 
     private String teamName;
 
-    public Set<Team> getTeams() {
-        return teams;
+    public List<User> getUsers() {
+        return users;
     }
 
-    public void setTeams(Set<Team> teams) {
-        this.teams = teams;
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 
     public Projects getProject() {
@@ -54,4 +55,6 @@ public class Team {
     public void setTeamName(String teamName) {
         this.teamName = teamName;
     }
+
+
 }

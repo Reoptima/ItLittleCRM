@@ -1,10 +1,78 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Add user</title>
 </head>
 <body>
+<div th:insert="header">...</div>
+<form th:action="${'/team/add'}" method="post" th:object="${team}">
+    <div style="color: red" th:if="${#fields.hasErrors('teamName')}" th:errors="*{teamName}"></div>
 
+    <div class="overflow-hidden bg-white shadow sm:rounded-lg">
+        <div class="px-4 py-5 sm:px-6">
+            <h3 class="text-lg font-medium leading-6 text-gray-900">Информация о пользователе</h3>
+            <p class="mt-1 max-w-2xl text-sm text-gray-500"></p>
+        </div>
+        <div class="border-t border-gray-200">
+            <dl>
+                <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500">Логин</dt>
+                    <input th:field="*{teamName}" type="text" autocomplete="none" placeholder="Введите логин"
+                           required
+                           class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+
+                </div>
+                <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500">Имя</dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-bold mb-2">Владеет имуществом в</label>
+                            <div th:each="user : ${users}">
+                                <input th:name="${'users[]'}" th:value="${user.id}"
+                                       th:checked="${team.id!=null && #lists.contains(team.users, user)}"
+                                       class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                       type="checkbox">
+                                <label th:text="${user.username}"></label>
+                            </div>
+                        </div>
+
+
+<!--                        <button id="dropdownDefault" data-dropdown-toggle="dropdown"-->
+<!--                                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center"-->
+<!--                                type="button">Пользователи-->
+<!--                            <svg class="ml-2 w-4 h-4" aria-hidden="true" fill="none" stroke="currentColor"-->
+<!--                                 viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">-->
+<!--                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"-->
+<!--                                      d="M19 9l-7 7-7-7"></path>-->
+<!--                            </svg>-->
+<!--                        </button>-->
+<!--                        <div id="dropdown" class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow">-->
+<!--                            <ul class="py-1 text-sm text-gray-700" aria-labelledby="dropdownDefault">-->
+<!--                                <li th:each="user : ${users}">-->
+<!--                                    <label th:text="${user.username}"></label>-->
+<!--                                    <input th:name="${'users[]'}" th:value="${user.id}"-->
+<!--                                           th:checked="${team.id!=null && #lists.contains(team.users, user)}"-->
+<!--                                           class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 focus:ring-2"-->
+<!--                                           type="checkbox" th:action="${user}">-->
+<!--                                </li>-->
+<!--                            </ul>-->
+<!--                        </div>-->
+                    </dd>
+                </div>
+                <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500 flex space-x-12">
+                        <button type="submit"
+                                class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                            Добавить команду
+                        </button>
+                        </span>
+                    </dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"></dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+</form>
 </body>
 </html>

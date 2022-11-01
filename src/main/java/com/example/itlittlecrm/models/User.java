@@ -17,7 +17,7 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue
     private Long id;
-    private String username, surname, name, patronymic, email;
+    public String username, surname, name, patronymic, email;
 
 
     @ManyToMany
@@ -38,7 +38,7 @@ public class User implements UserDetails {
 
     @Override
     public String getPassword() {
-        return null;
+        return password;
     }
 
     @Override
@@ -63,7 +63,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return active;
     }
 
 
@@ -138,4 +138,6 @@ public class User implements UserDetails {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+
 }

@@ -14,8 +14,6 @@ public class Projects {
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private Set<Team> teams;
-
-
 }
 
 

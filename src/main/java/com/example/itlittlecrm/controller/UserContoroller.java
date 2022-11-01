@@ -12,6 +12,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("")
@@ -44,9 +46,8 @@ public class UserContoroller {
     }
 
     private String getString(Model model) {
-        Iterable<User> users = userRepository.findAll();
         Iterable<Team> teams = teamRepository.findAll();
-        model.addAttribute("users", users);
+        model.addAttribute("users", userRepository.findAll());
         model.addAttribute("teams", teams);
         return "user/user-add";
     }
@@ -69,15 +70,34 @@ public class UserContoroller {
         return false;
     }
 
-    @GetMapping("/user/{id}/edit")
+    /*@GetMapping("/user/{id}/edit")
     public String userEdit(@PathVariable(value = "id") long id, Model model) {
+        Iterable<Team> teams = teamRepository.findAll();
+        User user = userRepository.findById(id).orElseThrow();
+        model.addAttribute("teams", teams);
+        model.addAttribute("user", user);
+        return "User/user-edit";
+    }*/
+
+    @GetMapping("/user/{user}/edit")
+    public String userEdit(User user, Model model) {
         Iterable<Team> teams = teamRepository.findAll();
         model.addAttribute("teams", teams);
         return "User/user-edit";
     }
+  /*  @GetMapping("/user/{id}/edit")
+    public String userEdit(@PathVariable(value = "id") long id,  Model model) {
+        Optional<User> user = userRepository.findById(id);
+        ArrayList<User> resurr = new ArrayList<>();
+        user.ifPresent(resurr::add);
+        Iterable<Team> teams = teamRepository.findAll();
+        model.addAttribute("teams", teams);
+        model.addAttribute("user", resurr);
+        return "User/user-edit";
+    }*/
 
     @PostMapping("/user/{id}/edit")
-    public String userPostUpdate(@PathVariable(value = "id") long id, @ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model) {
+    public String userPostUpdate(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             Iterable<Team> teams = teamRepository.findAll();
             model.addAttribute("teams", teams);
