@@ -11,7 +11,7 @@ public class Client {
 
     String name, surname, patronymic, phone, email;
 
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "clients", cascade = CascadeType.ALL)
     private Set<Sales> sales;
 
     public Long getId() {

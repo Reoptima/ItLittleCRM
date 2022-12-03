@@ -7,17 +7,29 @@
 </head>
 <body>
 <div th:insert="header">...</div>
-<div class="overflow-hidden bg-white shadow sm:rounded-lg" th:each="el : ${team}">
+<div class="overflow-hidden bg-white shadow sm:rounded-lg" th:each="el : ${sales}">
     <div class="px-4 py-5 sm:px-6">
         <h3 class="text-lg font-medium leading-6 text-gray-900">Название</h3>
-        <p class="mt-1 max-w-2xl text-sm text-gray-500" th:text="${el.teamName}"></p>
+        <p class="mt-1 max-w-2xl text-sm text-gray-500" th:text="${el.saleName}"></p>
     </div>
     <div class="border-t border-gray-200">
         <dl>
             <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt class="text-sm font-medium text-gray-500">Название</dt>
-                <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0" th:text="${el.teamName}"></dd>
+                <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0" th:text="${el.saleName}"></dd>
                 <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+            </div>
+            <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-medium text-gray-500">Кол-во</dt>
+                <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0" th:text="${el.saleAmount}"></dd>
+            </div>
+            <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-medium text-gray-500">Дата</dt>
+                <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0" th:text="${el.saleDate}"></dd>
+            </div>
+            <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-medium text-gray-500">Цена</dt>
+                <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0" th:text="${el.salePrice}"></dd>
             </div>
             <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt class="text-sm font-medium text-gray-500">Участники</dt>
@@ -28,10 +40,10 @@
                 </div>
             </div>
             <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt class="text-sm font-medium text-gray-500">Проект</dt>
-                <div th:each="project : ${el.projects}">
+                <dt class="text-sm font-medium text-gray-500">Клиент</dt>
+                <div th:each="client : ${el.clients}">
                     <div class="font-bold text-xl mb-2"><label th:text="'• '"/><a
-                            class="underline text-blue-600"  th:text="${project.projectName}" th:href="'/project/'+${project.id}"/>
+                            class="underline text-blue-600"  th:text="${client.name}" th:href="'/client/'+${client.id}"/>
                     </div>
                 </div>
             </div>
@@ -39,7 +51,7 @@
                 <dt class="text-sm font-medium text-gray-500 flex space-x-12">
                     <button type="button"
                             class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                        <a th:href="'/team/' + ${el.id} + '/edit'">Редактировать</a>
+                        <a th:href="'/sales/' + ${el.id} + '/edit'">Редактировать</a>
                     </button>
                     </span>
                     <button class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2"

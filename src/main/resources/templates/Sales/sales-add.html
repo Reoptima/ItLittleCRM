@@ -6,8 +6,8 @@
 </head>
 <body>
 <div th:insert="header">...</div>
-<form th:action="${'/team/'+team.id+'/edit'}" method="post" th:object="${team}">
-    <div style="color: red" th:if="${#fields.hasErrors('teamName')}" th:errors="*{teamName}"></div>
+<form th:action="${'/sales/add'}" method="post" th:object="${sale}">
+    <div style="color: red" th:if="${#fields.hasErrors('saleName')}" th:errors="*{saleName}"></div>
 
     <div class="overflow-hidden bg-white shadow sm:rounded-lg">
         <div class="px-4 py-5 sm:px-6">
@@ -18,19 +18,36 @@
             <dl>
                 <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm font-medium text-gray-500">Название</dt>
-                    <input th:field="*{teamName}" type="text" autocomplete="none" placeholder="Введите логин"
+                    <input th:field="*{saleName}" type="text" autocomplete="none" placeholder="Введите логин"
                            required
                            class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
-
+                </div>
+                <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500">Цена</dt>
+                    <input th:field="*{salePrice}" type="number" autocomplete="none" placeholder="Введите логин"
+                           required
+                           class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                </div>
+                <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500">Дата</dt>
+                    <input th:field="*{saleDate}" type="date" autocomplete="none" placeholder="Введите логин"
+                           required
+                           class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                </div>
+                <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500">Кол-во</dt>
+                    <input th:field="*{saleAmount}" type="number" autocomplete="none" placeholder="Введите логин"
+                           required
+                           class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                 </div>
                 <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm font-medium text-gray-500">Участники</dt>
+                    <dt class="text-sm font-medium text-gray-500">Оплату провёл</dt>
                     <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                         <div class="mb-4">
-                            <label class="block text-gray-700 text-sm font-bold mb-2">Участники</label>
+                            <label class="block text-gray-700 text-sm font-bold mb-2">участники</label>
                             <div th:each="user : ${users}">
                                 <input th:name="${'users[]'}" th:value="${user.id}"
-                                       th:checked="${team.id!=null && #lists.contains(team.users, user)}"
+                                       th:checked="${sale.id!=null && #lists.contains(sale.users, user)}"
                                        class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                                        type="checkbox">
                                 <label th:text="${user.username}"></label>
@@ -39,15 +56,15 @@
                     </dd>
                 </div>
                 <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm font-medium text-gray-500">Проект</dt>
+                    <dt class="text-sm font-medium text-gray-500">Имя</dt>
                     <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                         <div class="mb-4">
-                            <label class="block text-gray-700 text-sm font-bold mb-2">Прикрепить к проекту</label>
+                            <label class="block text-gray-700 text-sm font-bold mb-2">Оформил покупатель</label>
                             <div>
-                                <select th:field="*{projects}">
-                                    <option th:each="project : ${projects}"
-                                            th:value="${project.id}"
-                                            th:text="${project.projectName}">
+                                <select th:field="*{clients}">
+                                    <option th:each="client : ${clients}"
+                                            th:value="${client.id}"
+                                            th:text="${client.name}">
                                     </option>
                                 </select>
                             </div>
@@ -58,7 +75,7 @@
                     <dt class="text-sm font-medium text-gray-500 flex space-x-12">
                         <button type="submit"
                                 class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                            Изменить
+                            Добавить проект
                         </button>
                         </span>
                     </dt>

@@ -6,7 +6,7 @@
 </head>
 <body>
 <div th:insert="header">...</div>
-<form th:action="${'/project/add'}" method="post" th:object="${project}">
+<form th:action="${'/project/'+project.id+'/edit'}" method="post" th:object="${project}">
     <div style="color: red" th:if="${#fields.hasErrors('projectName')}" th:errors="*{projectName}"></div>
 
     <div class="overflow-hidden bg-white shadow sm:rounded-lg">

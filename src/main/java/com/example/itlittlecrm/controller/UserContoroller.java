@@ -1,6 +1,7 @@
 package com.example.itlittlecrm.controller;
 
 
+import com.example.itlittlecrm.models.Role;
 import com.example.itlittlecrm.models.Team;
 import com.example.itlittlecrm.models.User;
 import com.example.itlittlecrm.repo.TeamRepository;
@@ -26,17 +27,20 @@ public class UserContoroller {
     public String userMain(Model model) {
         Iterable<User> users = userRepository.findAll();
         model.addAttribute("User", users);
+        model.addAttribute("roles", Role.values());
         return "User/user-main";
     }
 
     @GetMapping("/user/add")
     public String userAdd(User user, Model model) {
+        model.addAttribute("roles", Role.values());
         return getString(model);
     }
 
     @PostMapping("/user/add")
     public String userPostAdd(@ModelAttribute("user") @Valid User user, Model model, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("roles", Role.values());
             return getString(model);
         }
         userRepository.save(user);
@@ -68,37 +72,20 @@ public class UserContoroller {
         return false;
     }
 
-    /*@GetMapping("/user/{id}/edit")
-    public String userEdit(@PathVariable(value = "id") long id, Model model) {
-        Iterable<Team> teams = teamRepository.findAll();
-        User user = userRepository.findById(id).orElseThrow();
-        model.addAttribute("teams", teams);
-        model.addAttribute("user", user);
-        return "User/user-edit";
-    }*/
-
     @GetMapping("/user/{user}/edit")
-    public String userEdit(Model model, @PathVariable String user) {
+    public String userEdit(Model model, User user) {
         Iterable<Team> teams = teamRepository.findAll();
         model.addAttribute("teams", teams);
+        model.addAttribute("roles", Role.values());
         return "User/user-edit";
     }
-  /*  @GetMapping("/user/{id}/edit")
-    public String userEdit(@PathVariable(value = "id") long id,  Model model) {
-        Optional<User> user = userRepository.findById(id);
-        ArrayList<User> resurr = new ArrayList<>();
-        user.ifPresent(resurr::add);
-        Iterable<Team> teams = teamRepository.findAll();
-        model.addAttribute("teams", teams);
-        model.addAttribute("user", resurr);
-        return "User/user-edit";
-    }*/
 
-    @PostMapping("/user/{id}/edit")
+    @PostMapping("/user/{user}/edit")
     public String userPostUpdate(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             Iterable<Team> teams = teamRepository.findAll();
             model.addAttribute("teams", teams);
+            model.addAttribute("roles", Role.values());
             return "User/user-edit";
         }
         userRepository.save(user);

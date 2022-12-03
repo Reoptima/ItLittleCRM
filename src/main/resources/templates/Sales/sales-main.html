@@ -7,7 +7,7 @@
 </head>
 <body>
 <div th:insert="header">...</div>
-<h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl">Все проекты</h1>
+<h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl">Все продажи</h1>
 <div class="overflow-x-auto relative shadow-md sm:rounded-lg" style="width: 500px">
     <table class="w-full text-sm text-left text-gray-500">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
@@ -16,16 +16,16 @@
                 Название
             </th>
             <th scope="col" class="py-3 px-6">
-                <a href="/project/add" class="font-medium text-blue-600 hover:underline">Добавить проект</a>
+                <a href="/sales/add" class="font-medium text-blue-600 hover:underline">Добавить продажу</a>
             </th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="el : ${projects}" class="bg-white border-b hover:bg-gray-50">
-            <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap" th:text="${el.projectName}">
+        <tr th:each="el : ${sales}" class="bg-white border-b hover:bg-gray-50">
+            <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap" th:text="${el.saleName}">
             </th>
             <td class="py-4 px-6 text-right">
-                <a th:href="${'/project/' + el.id}" class="font-medium text-blue-600 hover:underline">Details</a>
+                <a th:href="${'/sales/' + el.id}" class="font-medium text-blue-600 hover:underline">Details</a>
             </td>
         </tbody>
     </table>

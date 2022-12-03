@@ -8,6 +8,8 @@ import com.example.itlittlecrm.repo.ProjectRepository;
 import com.example.itlittlecrm.repo.TeamRepository;
 import com.example.itlittlecrm.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,9 +33,8 @@ public class TeamController {
     ProjectRepository projectRepository;
 
     @GetMapping("/team")
-
     public String teamMain(Model model) {
-        Iterable<Team> teams = teamRepository.findAll();
+        Iterable<Team> teams = teamRepository.findByUsersContains(userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()) );
         Iterable<Projects> projects = projectRepository.findAll();
         model.addAttribute("users", userRepository.findAll());
         model.addAttribute("teams", teams);

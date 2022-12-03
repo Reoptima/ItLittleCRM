@@ -26,6 +26,9 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "team_id"))
     public List<Team> teams;
 
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Sales> sales;
+
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
@@ -66,6 +69,13 @@ public class User implements UserDetails {
         return active;
     }
 
+    public Set<Sales> getSales() {
+        return sales;
+    }
+
+    public void setSales(Set<Sales> sales) {
+        this.sales = sales;
+    }
 
     public void setPassword(String password) {
         this.password = password;

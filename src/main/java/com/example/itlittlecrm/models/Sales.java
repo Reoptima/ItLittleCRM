@@ -10,10 +10,22 @@ public class Sales {
 
     @ManyToOne
     @JoinColumn(name = "client_id")
-    private Client client;
+    private Client clients;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User users;
 
     private String saleName, salePrice, saleDate;
     private int saleAmount;
+
+    public User getUsers() {
+        return users;
+    }
+
+    public void setUsers(User users) {
+        this.users = users;
+    }
 
     public Long getId() {
         return id;
@@ -23,12 +35,12 @@ public class Sales {
         this.id = id;
     }
 
-    public Client getClient() {
-        return client;
+    public Client getClients() {
+        return clients;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setClients(Client clients) {
+        this.clients = clients;
     }
 
     public String getSaleName() {

@@ -11,23 +11,23 @@
 
     <div class="overflow-hidden bg-white shadow sm:rounded-lg">
         <div class="px-4 py-5 sm:px-6">
-            <h3 class="text-lg font-medium leading-6 text-gray-900">Информация о пользователе</h3>
+            <h3 class="text-lg font-medium leading-6 text-gray-900">Информация о команде</h3>
             <p class="mt-1 max-w-2xl text-sm text-gray-500"></p>
         </div>
         <div class="border-t border-gray-200">
             <dl>
                 <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm font-medium text-gray-500">Логин</dt>
+                    <dt class="text-sm font-medium text-gray-500">Название команды</dt>
                     <input th:field="*{teamName}" type="text" autocomplete="none" placeholder="Введите логин"
                            required
                            class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
 
                 </div>
                 <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm font-medium text-gray-500">Имя</dt>
+                    <dt class="text-sm font-medium text-gray-500">Члены команды</dt>
                     <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                         <div class="mb-4">
-                            <label class="block text-gray-700 text-sm font-bold mb-2">Владеет имуществом в</label>
+                            <label class="block text-gray-700 text-sm font-bold mb-2">участники</label>
                             <div th:each="user : ${users}">
                                 <input th:name="${'users[]'}" th:value="${user.id}"
                                        th:checked="${team.id!=null && #lists.contains(team.users, user)}"
@@ -42,13 +42,14 @@
                     <dt class="text-sm font-medium text-gray-500">Имя</dt>
                     <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                         <div class="mb-4">
-                            <label class="block text-gray-700 text-sm font-bold mb-2">Владеет имуществом в</label>
-                            <div th:each="project : ${projects}">
-                                <input th:name="${'projects[]'}" th:value="${project.id}"
-                                       th:checked="${team.id!=null && #lists.contains(team.projects, project)}"
-                                       class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                                       type="checkbox">
-                                <label th:text="${project.projectName}"></label>
+                            <label class="block text-gray-700 text-sm font-bold mb-2">Прикрепить к проекту</label>
+                            <div>
+                                <select th:field="*{projects}">
+                                    <option th:each="project : ${projects}"
+                                            th:value="${project.id}"
+                                            th:text="${project.projectName}">
+                                    </option>
+                                </select>
                             </div>
                         </div>
                     </dd>
@@ -57,7 +58,7 @@
                     <dt class="text-sm font-medium text-gray-500 flex space-x-12">
                         <button type="submit"
                                 class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                            Добавить команду
+                            Добавить
                         </button>
                         </span>
                     </dt>

@@ -35,22 +35,25 @@ public class SalesController {
     }
 
     @GetMapping("/sales/add")
-    public String SalesAdd(Sales sales, Model model) {
+    public String SalesAdd(Model model) {
         return getString(model);
     }
 
     private String getString(Model model) {
-        Iterable<Sales> sales = salesRepository.findAll();
+        Iterable<Sales> sale = salesRepository.findAll();
         Iterable<User> users = userRepository.findAll();
         Iterable<Products> products = productsRepository.findAll();
-        model.addAttribute("sales", sales);
+        Iterable<Client> clients = clientRepository.findAll();
+        model.addAttribute("clients", clients);
+        model.addAttribute("sales", sale);
+        model.addAttribute("sale", new Sales());
         model.addAttribute("users", users);
         model.addAttribute("products", products);
         return "Sales/sales-add";
     }
 
     @PostMapping("/sales/add")
-    public String SalesPostAdd(@ModelAttribute("sales") Sales sales, Model model, BindingResult bindingResult) {
+    public String SalesPostAdd(@ModelAttribute("sale") Sales sales, Model model, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return getString(model);
         }
@@ -62,8 +65,10 @@ public class SalesController {
         if (!salesRepository.existsById(id)) {
             return true;
         }
-        Iterable<Sales> sales = salesRepository.findAll();
+        Iterable<Client> clients = clientRepository.findAll();
+        Sales sales = salesRepository.findById(id).orElseThrow();
         model.addAttribute("sales", sales);
+        model.addAttribute("clients", clients);
         return false;
     }
 
@@ -74,12 +79,14 @@ public class SalesController {
         }
         return "Sales/sales-details";
     }
-
     @GetMapping("/sales/{sales}/edit")
     public String salesEdit(Model model) {
+        Iterable<Sales> sale = salesRepository.findAll();
         Iterable<Products> products = productsRepository.findAll();
         Iterable<Client> clients = clientRepository.findAll();
         Iterable<User> users = userRepository.findAll();
+        model.addAttribute("sales", sale);
+        model.addAttribute("sale", new Sales());
         model.addAttribute("products", products);
         model.addAttribute("clients", clients);
         model.addAttribute("users", users);
@@ -89,7 +96,7 @@ public class SalesController {
     @PostMapping("/sales/{id}/edit")
     public String salesPostUpdate(@ModelAttribute("sales") Sales sales, Model model, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "team/team-edit";
+            return "Team/team-edit";
         }
         salesRepository.save(sales);
         return "redirect:/sales";

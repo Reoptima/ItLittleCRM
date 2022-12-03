@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 public class ProjectController {
@@ -65,7 +66,7 @@ public class ProjectController {
         if (!projectRepository.existsById(id)) {
             return true;
         }
-        Iterable<Projects> projects = projectRepository.findAll();
+        Projects projects = projectRepository.findById(id).orElseThrow();
         model.addAttribute("projects", projects);
         return false;
     }
@@ -103,5 +104,17 @@ public class ProjectController {
         Projects project = projectRepository.findById(id).orElseThrow();
         projectRepository.delete(project);
         return "redirect:/project";
+    }
+
+    @GetMapping("/project/filter")
+    public String projectFilter(Model model){
+        return "Project/project-filter";
+    }
+
+    @PostMapping("/project/filter/result")
+    public String projectFilterResult(@RequestParam String title, Model model) {
+        List<Projects> result = projectRepository.findByProjectNameContains(title);
+        model.addAttribute("result", result);
+        return "Project/project-filter";
     }
 }
