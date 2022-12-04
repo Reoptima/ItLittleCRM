@@ -21,6 +21,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private DataSource dataSource;
+    @Autowired
+    private LoginSuccessHandler loginSuccessHandler;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -37,13 +39,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/registration").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/login").permitAll()
+                .formLogin().loginPage("/login").successHandler(loginSuccessHandler).permitAll()
                 .and()
                 .logout();
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+
         /*auth.userDetailsService(userService)
                 .passwordEncoder(passwordEncoder);*/
         auth.jdbcAuthentication()

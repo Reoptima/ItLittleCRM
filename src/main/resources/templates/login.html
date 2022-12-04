@@ -2,22 +2,53 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-  <title>Spring Security Example </title>
+    <title>Spring Security Example </title>
 </head>
 <body>
 <div th:insert="header">...</div>
 
-<div th:if="${param.error}">
-  Invalid username and password.
+<!--<div th:if="${param.error}">-->
+<!--  Invalid username and password.-->
+<!--</div>-->
+<!--<div th:if="${param.logout}">-->
+<!--  You have been logged out.-->
+<!--</div>-->
+<!--<form th:action="@{/login}" method="post">-->
+<!--  <div><label> User Name : <input type="text" name="username"/> </label></div>-->
+<!--  <div><label> Password: <input type="password" name="password"/> </label></div>-->
+<!--  <div><input type="submit" value="Sign In"/></div>-->
+<!--</form>-->
+<!--<a href="/registration">Регистрация нового пользователя</a>-->
+
+<div class="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow-md sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
+    <form class="space-y-6" th:action="@{/login}" method="post">
+        <h5 class="text-xl font-medium text-gray-900 dark:text-white">Авторизация</h5>
+        <h5 th:if="${param.error}" class="text-xl font-medium text-gray-900 dark:text-red">Неверный логин или
+            пароль</h5>
+        <div>
+            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ваш логин</label>
+            <input name="username" id="email"
+                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                   placeholder="name@company.com" required>
+        </div>
+        <div>
+            <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ваш
+                пароль</label>
+            <input type="password" name="password" id="password" placeholder="••••••••"
+                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                   required>
+        </div>
+        <a href="/">
+            <button type="submit"
+                    class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                Войти в ваш аккаунт
+            </button>
+        </a>
+        <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
+            Не зарегистрированы? <a href="/registration" class="text-blue-700 hover:underline dark:text-blue-500">Создать
+            аккаунт</a>
+        </div>
+    </form>
 </div>
-<div th:if="${param.logout}">
-  You have been logged out.
-</div>
-<form th:action="@{/login}" method="post">
-  <div><label> User Name : <input type="text" name="username"/> </label></div>
-  <div><label> Password: <input type="password" name="password"/> </label></div>
-  <div><input type="submit" value="Sign In"/></div>
-</form>
-<a href="/registration">Регистрация нового пользователя</a>
 </body>
 </html>
