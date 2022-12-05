@@ -8,4 +8,6 @@ import java.util.List;
 public interface SybsystemRepository extends CrudRepository<Subsystem, Long> {
     List<Subsystem> findBySubsystemNameContains(String subsystemName);
     Subsystem findBySubsystemName(String subsystemName);
+
+    List<Subsystem> findByProjectContains(Long projectId);
 }

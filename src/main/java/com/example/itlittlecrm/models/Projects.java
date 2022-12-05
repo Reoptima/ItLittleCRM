@@ -1,6 +1,7 @@
 package com.example.itlittlecrm.models;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -13,7 +14,7 @@ public class Projects {
     private String projectName;
 
     @OneToMany(mappedBy = "projects", cascade = CascadeType.ALL)
-    private Set<Team> teams;
+    private List<Team> teams;
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private Set <Subsystem> subsystems;
@@ -37,11 +38,11 @@ public class Projects {
         this.projectName = projectName;
     }
 
-    public Set<Team> getTeams() {
+    public List<Team> getTeams() {
         return teams;
     }
 
-    public void setTeams(Set<Team> teams) {
+    public void setTeams(List<Team> teams) {
         this.teams = teams;
     }
 

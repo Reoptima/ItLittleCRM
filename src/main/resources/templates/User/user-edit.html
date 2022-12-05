@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Add city</title>
+    <title>Изменить</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.css"/>
@@ -36,17 +36,17 @@
                 </div>
                 <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm font-medium text-gray-500">Фамилия</dt>
-                        <input th:field="*{surname}" type="text" name="surname" autocomplete="none"
-                               placeholder="Введите фамилию"
-                               required
-                               class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                    <input th:field="*{surname}" type="text" name="surname" autocomplete="none"
+                           placeholder="Введите фамилию"
+                           required
+                           class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                 </div>
                 <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm font-medium text-gray-500">Отчество</dt>
-                        <input th:field="*{patronymic}" type="text" name="patronymic" autocomplete="none"
-                               placeholder="Введите фамилию"
-                               required
-                               class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                    <input th:field="*{patronymic}" type="text" name="patronymic" autocomplete="none"
+                           placeholder="Введите фамилию"
+                           required
+                           class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                 </div>
                 <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm font-medium text-gray-500">Email</dt>
@@ -61,28 +61,45 @@
                     <button id="dropdownBgHoverButton" data-dropdown-toggle="dropdownBgHover"
                             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                             type="button">Выбрать роли
-                        <svg class="ml-2 w-4 h-4" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        <svg class="ml-2 w-4 h-4" aria-hidden="true" fill="none" stroke="currentColor"
+                             viewBox="0 0 24 24"
                              xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </button>
 
                     <!-- Dropdown menu -->
-                    <div id="dropdownBgHover" class="hidden z-10 w-4 bg-white rounded shadow dark:bg-gray-700">
-                        <ul class="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200"
+                    <div id="dropdownBgHover" class="hidden z-10 w-40 bg-white rounded shadow">
+                        <div class="py-3 px-4 text-sm text-gray-900 dark:text-white">
+                            <div class="font-medium truncate">Список ролей</div>
+                        </div>
+                        <ul class="p-3 space-y-1 text-sm text-gray-700"
                             aria-labelledby="dropdownBgHoverButton">
                             <li th:each="role : ${roles}">
                                 <div class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
-                                    <input th:name="${'roles[]'}" th:value="${role.name}"
-                                           th:checked="${user.id!=null && #lists.contains(user.roles, role)}" id="checkbox-item-4" type="checkbox"
-                                           class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                                    <label for="checkbox-item-4"
-                                           class="ml-2 w-full text-sm font-medium text-gray-900 rounded dark:text-gray-300" th:text="${role.name}"></label>
+                                    <div class="flex items-center h-5">
+                                        <input th:name="${'roles[]'}" th:value="${role.name}"
+                                               th:checked="${user.id!=null && #lists.contains(user.roles, role)}"
+                                               id="checkbox-item-4" type="checkbox"
+                                               class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                    </div>
+                                    <div class="ml-2 text-sm">
+                                        <label for="checkbox-item-4" class="font-medium text-gray-900 dark:text-gray-300">
+                                            <div th:text="${role.name}"></div>
+<!--                                            <p id="helper-checkbox-text-1" class="text-xs font-normal text-gray-500 dark:text-gray-300">Роль</p>-->
+                                        </label>
+<!--                                        <label for="checkbox-item-4"-->
+<!--                                               class="ml-2 w-full text-sm font-medium text-gray-900 rounded dark:text-gray-300"-->
+<!--                                               th:text="${role.name}"></label>-->
+                                    </div>
                                 </div>
                             </li>
                         </ul>
                     </div>
                 </div>
+
+
                 <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm font-medium text-gray-500 flex space-x-12">
                         <button type="submit"

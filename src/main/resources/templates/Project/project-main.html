@@ -2,14 +2,37 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>Team</title>
+    <title>Команды</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
 <div th:insert="header">...</div>
-<h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl">Все проекты</h1>
-<div class="overflow-x-auto relative shadow-md sm:rounded-lg" style="width: 500px">
-    <table class="w-full text-sm text-left text-gray-500">
+<h1 style="margin: auto"
+    class="text-center text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl">Все
+    проекты</h1>
+<div class="m-auto overflow-x-auto relative shadow-md sm:rounded-lg" style="width: 500px">
+    <table id="myTable" class="w-full text-sm text-left text-gray-500">
+        <script>
+            function searchFunck() {
+                let input, filter, table, tr, td, i, txtValue;
+                input = document.getElementById("table-search");
+                filter = input.value.toUpperCase();
+                table = document.getElementById("myTable");
+                tr = table.getElementsByTagName("tr");
+
+                for (i = 0; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td")[0];
+                    if (td) {
+                        txtValue = td.textContent || td.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    }
+                }
+            }
+        </script>
         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
         <tr>
             <th scope="col" class="py-3 px-6">
@@ -20,10 +43,22 @@
             </th>
         </tr>
         </thead>
+        <label for="table-search" class="sr-only">Поиск</label>
+        <div class="relative w-full">
+            <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                <path fill-rule="evenodd"
+                      d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                      clip-rule="evenodd"></path>
+                </svg>
+            </div>
+            <input type="text" onkeyup="searchFunck()" id="table-search"
+                   class="block p-2 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                   placeholder="Поиск">
+        </div>
         <tbody>
         <tr th:each="el : ${projects}" class="bg-white border-b hover:bg-gray-50">
-            <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap" th:text="${el.projectName}">
-            </th>
+            <td scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap" th:text="${el.projectName}">
+            </td>
             <td class="py-4 px-6 text-right">
                 <a th:href="${'/project/' + el.id}" class="font-medium text-blue-600 hover:underline">Details</a>
             </td>
