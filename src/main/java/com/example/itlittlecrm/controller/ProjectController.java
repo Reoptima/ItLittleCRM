@@ -93,8 +93,8 @@ public class ProjectController {
         return "Project/project-details";
     }
 
-    @GetMapping("/project/{project}/edit")
-    public String projectEdit(Model model, Projects project) {
+    @GetMapping("/project/{projects}/edit")
+    public String projectEdit(Model model, Projects projects) {
         Iterable<Team> teams = teamRepository.findAll();
         Iterable<Subsystem> subsystems = sybsystemRepository.findAll();
         Iterable<Reports> reports = reportsRepository.findAll();
@@ -104,12 +104,12 @@ public class ProjectController {
         return "Project/project-edit";
     }
 
-    @PostMapping("/project/{id}/edit")
-    public String projectPostUpdate(@ModelAttribute("project") @Valid Projects project, BindingResult bindingResult, Model model) {
+    @PostMapping("/project/{projects}/edit")
+    public String projectPostUpdate(@ModelAttribute("projects") @Valid Projects projects, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return "Project/project-edit";
         }
-        projectRepository.save(project);
+        projectRepository.save(projects);
         return "redirect:/project";
     }
 
