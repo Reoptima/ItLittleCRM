@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -19,7 +20,6 @@ public class ProjectController {
 
     @Autowired
     private TeamRepository teamRepository;
-
     @Autowired
     UserRepository userRepository;
 
@@ -31,7 +31,20 @@ public class ProjectController {
 
     @GetMapping("/project")
     public String projectMain(Model model) {
-        Iterable<Projects> projects = projectRepository.findByTeamsUsersUsername(teamRepository.findByUsersContains(userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName())).toString());
+        List<Team> teams = teamRepository.findByUsersContains(userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
+        List<Projects> projects = new ArrayList<>();
+        try {
+            for (Team t : teams) {
+                List<Projects> p = new ArrayList<>();
+                p = projectRepository.findByTeamsContains(t);
+                for (Projects ap : p) {
+                    projects.add(ap);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
         model.addAttribute("projects", projects);
         return "Project/project-main";
     }
@@ -47,7 +60,7 @@ public class ProjectController {
         Iterable<Subsystem> subsystems = sybsystemRepository.findAll();
         Iterable<Reports> reports = reportsRepository.findAll();
         model.addAttribute("projects", project);
-        model.addAttribute("project", new Projects());
+        model.addAttribute("project" , new Projects());
         model.addAttribute("teams", teams);
         model.addAttribute("subsystems", subsystems);
         model.addAttribute("reports", reports);
@@ -80,8 +93,8 @@ public class ProjectController {
         return "Project/project-details";
     }
 
-    @GetMapping("/project/{projects}/edit")
-    public String projectEdit(Model model, Projects projects) {
+    @GetMapping("/project/{project}/edit")
+    public String projectEdit(Model model, Projects project) {
         Iterable<Team> teams = teamRepository.findAll();
         Iterable<Subsystem> subsystems = sybsystemRepository.findAll();
         Iterable<Reports> reports = reportsRepository.findAll();
@@ -91,12 +104,12 @@ public class ProjectController {
         return "Project/project-edit";
     }
 
-    @PostMapping("/project/{projects}/edit")
-    public String projectPostUpdate(@ModelAttribute("projects") @Valid Projects projects, BindingResult bindingResult, Model model) {
+    @PostMapping("/project/{id}/edit")
+    public String projectPostUpdate(@ModelAttribute("project") @Valid Projects project, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return "Project/project-edit";
         }
-        projectRepository.save(projects);
+        projectRepository.save(project);
         return "redirect:/project";
     }
 
@@ -108,7 +121,7 @@ public class ProjectController {
     }
 
     @GetMapping("/project/filter")
-    public String projectFilter(Model model) {
+    public String projectFilter(Model model){
         return "Project/project-filter";
     }
 
