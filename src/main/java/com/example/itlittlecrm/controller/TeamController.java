@@ -34,7 +34,7 @@ public class TeamController {
 
     @GetMapping("/team")
     public String teamMain(Model model) {
-        Iterable<Team> teams = teamRepository.findByUsersContains(userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()) );
+        Iterable<Team> teams = teamRepository.findByUsersContains(userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
         Iterable<Projects> projects = projectRepository.findAll();
         model.addAttribute("users", userRepository.findAll());
         model.addAttribute("teams", teams);

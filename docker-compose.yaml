@@ -14,14 +14,14 @@ services:
     volumes:
       - db-data:/var/lib/postgresql/data
   pgadmin4:
-      image: dpage/pgadmin4
-      container_name: pgadmin4
-      restart: always
-      environment:
-        PGADMIN_DEFAULT_EMAIL: reoptima@gmail.com
-        PGADMIN_DEFAULT_PASSWORD: a1228f19-e6f7-4j93-a3df-7d4db6031abc
-      ports:
-        - "8080:80"
+    image: dpage/pgadmin4
+    container_name: pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: reoptima@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: a1228f19-e6f7-4j93-a3df-7d4db6031abc
+    ports:
+      - "8080:80"
 
 volumes:
   db-data:
