@@ -35,11 +35,9 @@ public class ProjectController {
         List<Projects> projects = new ArrayList<>();
         try {
             for (Team t : teams) {
-                List<Projects> p = new ArrayList<>();
+                List<Projects> p;
                 p = projectRepository.findByTeamsContains(t);
-                for (Projects ap : p) {
-                    projects.add(ap);
-                }
+                projects.addAll(p);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -60,7 +58,7 @@ public class ProjectController {
         Iterable<Subsystem> subsystems = sybsystemRepository.findAll();
         Iterable<Reports> reports = reportsRepository.findAll();
         model.addAttribute("projects", project);
-        model.addAttribute("project" , new Projects());
+        model.addAttribute("project", new Projects());
         model.addAttribute("teams", teams);
         model.addAttribute("subsystems", subsystems);
         model.addAttribute("reports", reports);
@@ -94,7 +92,7 @@ public class ProjectController {
     }
 
     @GetMapping("/project/{projects}/edit")
-    public String projectEdit(Model model, Projects projects) {
+    public String projectEdit(Model model) {
         Iterable<Team> teams = teamRepository.findAll();
         Iterable<Subsystem> subsystems = sybsystemRepository.findAll();
         Iterable<Reports> reports = reportsRepository.findAll();
@@ -105,7 +103,8 @@ public class ProjectController {
     }
 
     @PostMapping("/project/{projects}/edit")
-    public String projectPostUpdate(@ModelAttribute("projects") @Valid Projects projects, BindingResult bindingResult, Model model) {
+    public String projectPostUpdate(@ModelAttribute("projects")
+                                    @Valid Projects projects, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "Project/project-edit";
         }
@@ -114,14 +113,14 @@ public class ProjectController {
     }
 
     @PostMapping("/project/{id}/remove")
-    public String projectPostDelete(@PathVariable(value = "id") long id, Model model) {
+    public String projectPostDelete(@PathVariable(value = "id") long id) {
         Projects project = projectRepository.findById(id).orElseThrow();
         projectRepository.delete(project);
         return "redirect:/project";
     }
 
     @GetMapping("/project/filter")
-    public String projectFilter(Model model){
+    public String projectFilter() {
         return "Project/project-filter";
     }
 
