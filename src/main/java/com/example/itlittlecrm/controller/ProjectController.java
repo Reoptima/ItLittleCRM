@@ -31,18 +31,9 @@ public class ProjectController {
 
     @GetMapping("/project")
     public String projectMain(Model model) {
-        List<Team> teams = teamRepository.findByUsersContains(userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
-        List<Projects> projects = new ArrayList<>();
-        try {
-            for (Team t : teams) {
-                List<Projects> p;
-                p = projectRepository.findByTeamsContains(t);
-                projects.addAll(p);
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        List<Team> teams = teamRepository.findByUsersContains(userRepository.findByUsername(username));
+        List<Projects> projects = projectRepository.findByTeamsIn(teams);
         model.addAttribute("projects", projects);
         return "Project/project-main";
     }

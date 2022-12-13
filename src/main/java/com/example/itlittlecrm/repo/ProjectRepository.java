@@ -11,4 +11,6 @@ public interface ProjectRepository extends CrudRepository<Projects, Long> {
 
 //    Projects findByProjectName(String projectName);
     List<Projects> findByTeamsContains(Team teams);
+
+    List<Projects> findByTeamsIn(List<Team> teams);
 }

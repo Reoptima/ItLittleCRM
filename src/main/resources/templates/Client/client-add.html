@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить клиента</title>
+</head>
+<body>
+<div th:insert="header">...</div>
+<form th:action="${'/client/add'}" method="post" th:object="${client}">
+    <div style="color: red" th:if="${#fields.hasErrors}">Неверный формат номера телефона</div>
+    <div class="overflow-hidden bg-white shadow sm:rounded-lg">
+        <div class="px-4 py-5 sm:px-6">
+            <h3 class="text-lg font-medium leading-6 text-gray-900">Информация о клиенте</h3>
+            <p class="mt-1 max-w-2xl text-sm text-gray-500"></p>
+        </div>
+        <div class="border-t border-gray-200">
+            <dl>
+                <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500">Имя</dt>
+                    <input th:field="*{name}" type="text" autocomplete="none" placeholder="Введите имя"
+                           required
+                           class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+
+                </div>
+                <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500">Фамилия</dt>
+                    <input th:field="*{surname}" type="text" autocomplete="none" placeholder="Введите фамилию"
+                           required
+                           class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                </div>
+                <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500">Отчество
+                    </dt>
+                        <input th:field="*{patronymic}" type="text" autocomplete="none" placeholder="Введите отчество"
+                               class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                </div>
+                <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500">Телефон</dt>
+                    <input th:field="*{phone}" type="number" id="phone" th:id="phone" autocomplete="none" placeholder="+7 (900) 123-45-67"
+                           minlength="11" maxlength="11"
+                           required
+                           pattern="\+7\s?[\(]{0,1}9[0-9]{2}[\)]{0,1}\s?\d{3}[-]{0,1}\d{2}[-]{0,1}\d{2}"
+                           class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                </div>
+                <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500">Email</dt>
+                        <input th:field="*{email}" type="email" autocomplete="none" placeholder="Введите email"
+                               class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                </div>
+                <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500 flex space-x-12">
+                        <button type="submit"
+                                class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                            Добавить клиента
+                        </button>
+                    </dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"></dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+</form>
+</body>
+</html>

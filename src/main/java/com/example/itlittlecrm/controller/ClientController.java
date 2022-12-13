@@ -33,6 +33,8 @@ public class ClientController {
     @PostMapping("/client/add")
     public String clientPostAdd(@ModelAttribute("client") @Valid Client client, Model model, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
+            String errorMessage = bindingResult.getFieldError().getDefaultMessage();
+            model.addAttribute("errorMessage", errorMessage);
             return getString(model);
         }
 
@@ -43,6 +45,7 @@ public class ClientController {
     private String getString(Model model) {
         Iterable<Client> clients = clientRepository.findAll();
         model.addAttribute("clients", clients);
+        model.addAttribute("client", new Client());
         return "Client/client-add";
     }
 

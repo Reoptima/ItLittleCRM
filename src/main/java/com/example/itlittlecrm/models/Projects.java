@@ -1,6 +1,7 @@
 package com.example.itlittlecrm.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -17,7 +18,8 @@ public class Projects {
     private List<Team> teams;
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
-    private Set <Subsystem> subsystems;
+    private List<Subsystem> subsystems = new ArrayList<>();
+
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private Set <Reports> reports;
@@ -46,11 +48,11 @@ public class Projects {
         this.teams = teams;
     }
 
-    public Set<Subsystem> getSubsystems() {
+    public List<Subsystem> getSubsystems() {
         return subsystems;
     }
 
-    public void setSubsystems(Set<Subsystem> subsystems) {
+    public void setSubsystems(List<Subsystem> subsystems) {
         this.subsystems = subsystems;
     }
 

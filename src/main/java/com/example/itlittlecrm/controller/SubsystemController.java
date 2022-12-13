@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 public class SubsystemController {
@@ -25,13 +26,14 @@ public class SubsystemController {
     @Autowired
     ProjectRepository projectRepository;
 
-    @GetMapping("/subsystem")
-    public String subsystemMain(Model model) {
-        Iterable<Subsystem> subsystems = sybsystemRepository.findAll();
-        Iterable<Projects> projects = projectRepository.findAll();
-        model.addAttribute("Subsystem", subsystems);
-        model.addAttribute("projects", projects);
-        return "Subsystem/subsystem-main";
+    @GetMapping("/project/{projectId}/subsystems")
+    public String viewSubsystems(@PathVariable Long projectId, Model model) {
+        Projects project = projectRepository.findById(projectId).orElse(null);
+        assert project != null;
+        List<Subsystem> subsystems = project.getSubsystems();
+        model.addAttribute("project", project);
+        model.addAttribute("subsystems", subsystems);
+        return "subsystems";
     }
 
     @GetMapping("/subsystem/add")

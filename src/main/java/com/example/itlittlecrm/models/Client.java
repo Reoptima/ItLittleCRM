@@ -1,6 +1,7 @@
 package com.example.itlittlecrm.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import java.util.Set;
 
 @Entity
@@ -9,7 +10,9 @@ public class Client {
     @GeneratedValue
     private Long id;
 
-    String name, surname, patronymic, phone, email;
+    String name, surname, patronymic, email;
+    @Pattern(regexp = "^\\+7\\d{10}$", message = "Номер телефона должен быть в формате +7XXXXXXXXXX")
+    private String phone;
 
     @OneToMany(mappedBy = "clients", cascade = CascadeType.ALL)
     private Set<Sales> sales;
