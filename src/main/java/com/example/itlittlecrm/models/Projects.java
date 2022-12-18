@@ -17,7 +17,7 @@ public class Projects {
     @OneToMany(mappedBy = "projects", cascade = CascadeType.ALL)
     private List<Team> teams;
 
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "projects", cascade = CascadeType.ALL)
     private List<Subsystem> subsystems = new ArrayList<>();
 
 
