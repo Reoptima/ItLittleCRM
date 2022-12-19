@@ -10,7 +10,7 @@ public class Comments {
 
     @ManyToOne
     @JoinColumn(name = "task_id")
-    private Task tasks;
+    private Task task;
 
     private String commentText, commentDate;
 
@@ -22,12 +22,12 @@ public class Comments {
         this.id = id;
     }
 
-    public Task getTasks() {
-        return tasks;
+    public Task getTask() {
+        return task;
     }
 
-    public void setTasks(Task tasks) {
-        this.tasks = tasks;
+    public void setTask(Task task) {
+        this.task = task;
     }
 
     public String getCommentText() {

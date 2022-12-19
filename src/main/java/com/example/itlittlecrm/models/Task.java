@@ -1,10 +1,14 @@
 package com.example.itlittlecrm.models;
 
+import com.example.itlittlecrm.interfaces.IExelExport;
+
 import javax.persistence.*;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 @Entity
-public class Task {
+public class Task implements IExelExport {
 
     @Id
     @GeneratedValue
@@ -14,7 +18,7 @@ public class Task {
     @JoinColumn(name = "sybsystem_id")
     private Subsystem subsystem;
 
-    @OneToMany(mappedBy = "tasks", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
     private Set<Comments> comments;
 
     private String taskName, taskText, taskStatus, taskDeadline;
@@ -88,5 +92,15 @@ public class Task {
 
     public void setTaskDeadline(String taskDeadline) {
         this.taskDeadline = taskDeadline;
+    }
+
+    @Override
+    public List<Object> getHeaders() {
+        return Arrays.asList("Название задачи", "Текст задачи", "Статус задачи", "Срок выполнения");
+    }
+
+    @Override
+    public List<Object> getData() {
+        return Arrays.asList(taskName, taskText, getStatusName(), taskDeadline);
     }
 }

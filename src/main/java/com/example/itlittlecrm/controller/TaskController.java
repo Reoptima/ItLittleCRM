@@ -5,6 +5,7 @@ import com.example.itlittlecrm.models.Subsystem;
 import com.example.itlittlecrm.models.Task;
 import com.example.itlittlecrm.repo.ProjectRepository;
 import com.example.itlittlecrm.repo.TaskRepository;
+import com.google.common.collect.Iterables;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +15,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Controller
 public class TaskController {
@@ -68,5 +74,24 @@ public class TaskController {
     public String taskDelete(Task task) {
         taskRepository.delete(task);
         return "redirect:/project/";
+    }
+
+        @GetMapping("/task/export")
+    public void mainExelExport(HttpServletResponse response) throws IOException {
+
+        response.setContentType("application/octet-stream");
+        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+        String currentDateTime = dateFormatter.format(new Date());
+
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=AllHrOrCommissionExport_" + currentDateTime + ".xlsx";
+        response.setHeader(headerKey, headerValue);
+
+
+        Task[] tasks = Iterables.toArray(taskRepository.findAll(), Task.class);
+
+
+        ExelExport exelExport = new ExelExport(tasks);
+        exelExport.generateExcelFile(response);
     }
 }

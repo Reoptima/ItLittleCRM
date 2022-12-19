@@ -29,6 +29,37 @@
                 <dt class="text-sm font-medium text-gray-500">Срок сдачи</dt>
                 <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0" th:text="${task.taskDeadline}"></dd>
             </div>
+            <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-medium text-gray-500">Комментарии</dt>
+
+                <button id="dropdownInformationButton" data-dropdown-toggle="dropdownInformation"
+                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none
+                        focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center"
+                        type="button">Список комментариев
+                    <svg class="ml-2 w-4 h-4" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+
+                <!-- Dropdown menu -->
+                <div id="dropdownInformation"
+                     class="hidden z-10 w-40 bg-white rounded divide-y divide-gray-100 shadow">
+                    <div class="py-3 px-4 text-sm text-gray-900 dark:text-white">
+
+                        <a th:href="'/tasks/'+${task.id}+'/comments/add?redirect=/tasks/'+${task.id}"
+                           class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none">Добавить</a>
+                    </div>
+                    <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
+                        aria-labelledby="dropdownInformationButton">
+                        <li th:each="comments : ${task.comments}">
+                            <a th:href="'/comments/'+${comments.id}"
+                               th:text="${comments.commentDate}"
+                               class="block py-2 px-4 hover:bg-gray-100"></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
             <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt class="text-sm font-medium text-gray-500 flex space-x-12">
                     <button type="button"
