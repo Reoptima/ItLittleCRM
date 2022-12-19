@@ -1,6 +1,7 @@
 package com.example.itlittlecrm.models;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Subsystem {
@@ -12,6 +13,17 @@ public class Subsystem {
     @ManyToOne
     @JoinColumn(name = "project_id")
     private Projects projects;
+
+    @OneToMany(mappedBy = "subsystem", cascade = CascadeType.ALL)
+    private Set<Task> tasks;
+
+    public Set<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(Set<Task> tasks) {
+        this.tasks = tasks;
+    }
 
     private String subsystemName;
 

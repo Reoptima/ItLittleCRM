@@ -6,18 +6,33 @@ import java.util.Set;
 @Entity
 public class Task {
 
-    @ManyToOne
-    @JoinColumn(name = "sybsystem_id")
-    private Subsystem subsystem;
-
     @Id
     @GeneratedValue
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "sybsystem_id")
+    private Subsystem subsystem;
 
     @OneToMany(mappedBy = "tasks", cascade = CascadeType.ALL)
     private Set<Comments> comments;
 
     private String taskName, taskText, taskStatus, taskDeadline;
+
+    public String getStatusName() {
+        switch (taskStatus) {
+            case "lookAt":
+                return "На рассмотрении";
+            case "inWork":
+                return "В работе";
+            case "done":
+                return "Выполнено";
+            case "reWork":
+                return "Отправлено на пересмотр";
+            default:
+                return taskStatus;
+        }
+    }
 
     public Subsystem getSubsystem() {
         return subsystem;

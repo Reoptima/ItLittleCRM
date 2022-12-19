@@ -21,7 +21,7 @@ public class Projects {
     private List<Subsystem> subsystems = new ArrayList<>();
 
 
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "projects", cascade = CascadeType.ALL)
     private Set <Reports> reports;
 
     public Long getId() {

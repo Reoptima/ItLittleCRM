@@ -10,7 +10,7 @@ public class Reports {
 
     @ManyToOne
     @JoinColumn(name = "project_id")
-    private Projects project;
+    private Projects projects;
 
     private String reportName, reportText;
 
@@ -22,12 +22,12 @@ public class Reports {
         this.id = id;
     }
 
-    public Projects getProject() {
-        return project;
+    public Projects getProjects() {
+        return projects;
     }
 
-    public void setProject(Projects project) {
-        this.project = project;
+    public void setProjects(Projects project) {
+        this.projects = project;
     }
 
     public String getReportName() {

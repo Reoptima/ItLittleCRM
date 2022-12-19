@@ -20,6 +20,9 @@ public class SubsystemController {
     @Autowired
     ProjectRepository projectRepository;
 
+    @Autowired
+    TaskController taskController;
+
     @GetMapping("/project/{project}/subsystems")
     public String viewSubsystems(@PathVariable Projects projects, Model model) {
         Projects project = projectRepository.findById(projects.getId()).orElse(null);
@@ -40,11 +43,6 @@ public class SubsystemController {
         subsystem.setProjects(projects);
         model.addAttribute("redirect", redirect);
         return "Subsystem/subsystem-add";
-//        Iterable<Subsystem> subsystems = sybsystemRepository.findAll();
-//        Iterable<Projects> projects = projectRepository.findAll();
-//        model.addAttribute("Subsystem", subsystems);
-//        model.addAttribute("projects", projects);
-
     }
 
     @PostMapping("/project/{projects}/subsystem/add")
@@ -71,8 +69,6 @@ public class SubsystemController {
 
     @GetMapping("/subsystem/{subsystem}/edit")
     private String subsystemEdit(Subsystem subsystem, Model model) {
-        Iterable<Projects> projects = projectRepository.findAll();
-        model.addAttribute("projects", projects);
         return "Subsystem/subsystem-edit";
     }
 
@@ -91,5 +87,4 @@ public class SubsystemController {
         sybsystemRepository.delete(subsystem);
         return "redirect:/project";
     }
-
 }
