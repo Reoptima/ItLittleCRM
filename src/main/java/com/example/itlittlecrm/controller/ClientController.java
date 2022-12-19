@@ -67,15 +67,12 @@ public class ClientController {
     }
 
     @GetMapping("/client/{client}/edit")
-    public String clientEdit(Model model) {
-        Iterable<Client> clients = clientRepository.findAll();
-        model.addAttribute("clients", clients);
+    public String clientEdit(Model model, Client client) {
         return "Client/client-edit";
     }
 
-    @PostMapping("/client/{client}/edit")
-    public String clientPostUpdate(@PathVariable("client")
-                                   @Valid Client client, BindingResult bindingResult) {
+    @PostMapping("/client/{id}/edit")
+    public String clientPostEdit(@ModelAttribute("client") @Valid Client client, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "Client/client-edit";
         }

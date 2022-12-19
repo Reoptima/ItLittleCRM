@@ -8,53 +8,21 @@
 <div th:insert="header">...</div>
 <div class="overflow-hidden bg-white shadow sm:rounded-lg">
     <div class="px-4 py-5 sm:px-6">
-        <h3 class="text-lg font-medium leading-6 text-gray-900">Название подпроекта</h3>
-        <p class="mt-1 max-w-2xl text-sm text-gray-500" th:text="${subsystem.subsystemName}"></p>
+        <h3 class="text-lg font-medium leading-6 text-gray-900">Название категории</h3>
+        <p class="mt-1 max-w-2xl text-sm text-gray-500" th:text="${productTypes.productTypeName}"></p>
     </div>
     <div class="border-t border-gray-200">
         <dl>
             <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt class="text-sm font-medium text-gray-500">Название</dt>
-                <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0" th:text="${subsystem.subsystemName}"></dd>
-                <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-            </div>
-            <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt class="text-sm font-medium text-gray-500">Задачи</dt>
-
-                <button id="dropdownInformationButton" data-dropdown-toggle="dropdownInformation"
-                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none
-                        focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center"
-                        type="button">Список задач
-                    <svg class="ml-2 w-4 h-4" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                    </svg>
-                </button>
-
-                <!-- Dropdown menu -->
-                <div id="dropdownInformation"
-                     class="hidden z-10 w-40 bg-white rounded divide-y divide-gray-100 shadow">
-                    <div class="py-3 px-4 text-sm text-gray-900 dark:text-white">
-
-                        <a th:href="'/subsystem/'+${subsystem.id}+'/tasks/add?redirect=/subsystem/'+${subsystem.id}"
-                           class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none">Добавить</a>
-                    </div>
-                    <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
-                        aria-labelledby="dropdownInformationButton">
-                        <li th:each="tasks : ${subsystem.tasks}">
-                            <a th:href="'/tasks/'+${tasks.id}"
-                               th:text="${tasks.taskName}"
-                               class="block py-2 px-4 hover:bg-gray-100"></a>
-                        </li>
-                    </ul>
-                </div>
+                <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0" th:text="${productTypes.productTypeName}"></dd>
             </div>
 
             <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt class="text-sm font-medium text-gray-500 flex space-x-12">
                     <button type="button"
                             class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                        <a th:href="'/subsystem/' + ${subsystem.id} + '/edit'">Редактировать</a>
+                        <a th:href="'/types/' + ${productTypes.id} + '/edit'">Редактировать</a>
                     </button>
                     </span>
                     <button class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2"
@@ -86,7 +54,7 @@
                                     </svg>
                                     <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Вы уверены,
                                         что хотите удалить эту запись?</h3>
-                                    <form th:action="'/subsystem/' + ${subsystem.id} +'/remove'" method="post">
+                                    <form th:action="'/types/' + ${productTypes.id} +'/remove'" method="post">
                                         <button data-modal-toggle="popup-modal" type="submit"
                                                 class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
                                             Да, я уверен
@@ -104,51 +72,8 @@
                 </dt>
                 <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"></dd>
             </div>
-            <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                <dt class="text-sm font-medium text-gray-500">
-                    <button type="button"
-                            class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                        <a href="/task/export">Скачать все задачи</a>
-                    </button>
-                </dt>
-            </div>
         </dl>
     </div>
-    <div style="width: 400px; height: 500px; margin-bottom: 100px" class="shadow-lg rounded-lg overflow-hidden">
-        <div class="py-3 px-5 bg-gray-50">Статус задач</div>
-        <canvas class="p-10" id="chartPie"></canvas>
-    </div>
-
-    <!-- Required chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <!-- Chart pie -->
-    <script>
-        const dataPie = {
-            labels: ["На рассмотрении", "В работе", "Выполнено", "Отправлено на пересмотр"],
-            datasets: [
-                {
-                    label: "Процент выполнения задач",
-                    data: [2, 1, 5, 1],
-                    backgroundColor: [
-                        "rgb(169,147,0)",
-                        "rgb(39,42,133)",
-                        "rgb(39,150,67)",
-                        "rgb(140,23,23)",
-                    ],
-                    hoverOffset: 4,
-                },
-            ],
-        };
-
-        const configPie = {
-            type: "pie",
-            data: dataPie,
-            options: {},
-        };
-
-        var chartBar = new Chart(document.getElementById("chartPie"), configPie);
-    </script>
 </div>
 </body>
 </html>

@@ -24,7 +24,6 @@
                     <input th:field="*{taskName}" type="text" autocomplete="none" placeholder="Введите название"
                            required
                            class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
-
                 </div>
                 <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm font-medium text-gray-500">Название</dt>
@@ -54,7 +53,8 @@
                             <!--                                      clip-rule="evenodd"></path>-->
                             <!--                            </svg>-->
                         </div>
-                        <input th:value="${task.taskDeadline}" th:field="*{taskDeadline}" datepicker datepicker-autohide datepicker-format="dd/mm/yyyy" type="text"
+                        <input th:value="${task.taskDeadline}" th:field="*{taskDeadline}" datepicker datepicker-autohide
+                               datepicker-format="dd/mm/yyyy" type="text"
                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                placeholder="Выберите дату">
                     </div>
