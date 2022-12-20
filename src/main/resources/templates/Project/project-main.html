@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Команды</title>
@@ -38,7 +38,7 @@
             <th scope="col" class="py-3 px-6">
                 Название
             </th>
-            <th scope="col" class="py-3 px-6">
+            <th sec:authorize="hasAnyAuthority('DEVL')" scope="col" class="py-3 px-6">
                 <a href="/project/add" class="font-medium text-blue-600 hover:underline">Добавить проект</a>
             </th>
         </tr>
