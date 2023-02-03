@@ -31,6 +31,7 @@ public class ProjectController {
     private ReportsRepository reportsRepository;
 
     @GetMapping("/project")
+    @PreAuthorize("hasAnyAuthority('DEV','DEVLEAD','DEVOWN','ADMIN')")
     public String projectMain(Model model) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         List<Team> teams = teamRepository.findByUsersContains(userRepository.findByUsername(username));

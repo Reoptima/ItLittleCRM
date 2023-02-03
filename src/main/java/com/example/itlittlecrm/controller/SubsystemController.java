@@ -5,6 +5,7 @@ import com.example.itlittlecrm.models.Subsystem;
 import com.example.itlittlecrm.repo.ProjectRepository;
 import com.example.itlittlecrm.repo.SybsystemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -35,6 +36,7 @@ public class SubsystemController {
     }
 
     @GetMapping("/project/{projects}/subsystem/add")
+    @PreAuthorize("hasAnyAuthority('DEVLEAD','ADMIN')")
     public String subsystemAdd(Subsystem subsystem, Projects projects, @RequestParam("redirect") String redirect, Model model) {
         return getString(model, subsystem, projects, redirect);
     }

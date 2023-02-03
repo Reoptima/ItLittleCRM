@@ -7,6 +7,7 @@ import com.example.itlittlecrm.repo.ProjectRepository;
 import com.example.itlittlecrm.repo.TaskRepository;
 import com.google.common.collect.Iterables;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,6 +33,7 @@ public class TaskController {
     TaskRepository taskRepository;
 
     @GetMapping("/subsystem/{subsystem}/tasks/add")
+    @PreAuthorize("hasAnyAuthority('DEV','DEVLEAD','DEVOWN','ADMIN')")
     public String taskAdd(Subsystem subsystem, Projects projects, Task task, @RequestParam("redirect") String redirect, Model model, BindingResult bindingResult) {
         return getString(model, task, projects, subsystem, redirect);
     }

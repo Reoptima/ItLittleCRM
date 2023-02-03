@@ -5,6 +5,7 @@ import com.example.itlittlecrm.models.Reports;
 import com.example.itlittlecrm.repo.ProjectRepository;
 import com.example.itlittlecrm.repo.ReportsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,6 +23,7 @@ public class reportController {
     ReportsRepository reportsRepository;
 
     @GetMapping("/project/{projects}/report/add")
+    @PreAuthorize("hasAnyAuthority('DEVLEAD','ADMIN')")
     public String reportAdd(Reports reports, Projects projects, @RequestParam("redirect") String redirect, Model model) {
         return getString(model, reports, projects, redirect);
     }

@@ -38,7 +38,7 @@
             <th scope="col" class="py-3 px-6">
                 Название
             </th>
-            <th sec:authorize="hasAnyAuthority('DEVL')" scope="col" class="py-3 px-6">
+            <th sec:authorize="hasAnyAuthority('USER', 'DEVLEAD')" scope="col" class="py-3 px-6">
                 <a href="/project/add" class="font-medium text-blue-600 hover:underline">Добавить проект</a>
             </th>
         </tr>
@@ -60,7 +60,7 @@
             <td scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap" th:text="${el.projectName}">
             </td>
             <td class="py-4 px-6 text-right">
-                <a th:href="${'/project/' + el.id}" class="font-medium text-blue-600 hover:underline">Details</a>
+                <a th:href="${'/project/' + el.id}" class="font-medium text-blue-600 hover:underline">Детали</a>
             </td>
         </tbody>
     </table>

@@ -19,7 +19,7 @@ services:
     restart: always
     environment:
       PGADMIN_DEFAULT_EMAIL: reoptima@gmail.com
-      PGADMIN_DEFAULT_PASSWORD: a1228f19-e6f7-4j93-a3df-7d4db6031abc
+      PGADMIN_DEFAULT_PASSWORD: R5714
     ports:
       - "8080:80"
 

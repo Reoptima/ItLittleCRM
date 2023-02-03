@@ -6,6 +6,7 @@ import com.example.itlittlecrm.repo.ProductsRepository;
 import com.example.itlittlecrm.repo.SalesRepository;
 import com.example.itlittlecrm.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,6 +27,7 @@ public class SalesController {
     ClientRepository clientRepository;
 
     @GetMapping("/sales")
+    @PreAuthorize("hasAnyAuthority('PRODUCT','ADMIN')")
     public String salesMain(Model model) {
         Iterable<Sales> sales = salesRepository.findAll();
         model.addAttribute("sales", sales);

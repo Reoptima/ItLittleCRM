@@ -8,6 +8,7 @@ import com.example.itlittlecrm.repo.ProjectRepository;
 import com.example.itlittlecrm.repo.TeamRepository;
 import com.example.itlittlecrm.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -33,6 +34,7 @@ public class TeamController {
     ProjectRepository projectRepository;
 
     @GetMapping("/team")
+    @PreAuthorize("hasAnyAuthority('DEVLEAD','ADMIN')")
     public String teamMain(Model model) {
         Iterable<Team> teams = teamRepository.findByUsersContains(userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
         Iterable<Projects> projects = projectRepository.findAll();

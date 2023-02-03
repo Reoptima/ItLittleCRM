@@ -7,6 +7,7 @@ import com.example.itlittlecrm.models.User;
 import com.example.itlittlecrm.repo.TeamRepository;
 import com.example.itlittlecrm.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,6 +25,7 @@ public class UserContoroller {
     TeamRepository teamRepository;
 
     @GetMapping("/user")
+    @PreAuthorize("hasAnyAuthority('HR','ADMIN')")
     public String userMain(Model model) {
         Iterable<User> users = userRepository.findAll();
         model.addAttribute("User", users);

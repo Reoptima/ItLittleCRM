@@ -3,6 +3,7 @@ package com.example.itlittlecrm.controller;
 import com.example.itlittlecrm.models.Client;
 import com.example.itlittlecrm.repo.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,7 +18,7 @@ import javax.validation.Valid;
 public class ClientController {
     @Autowired
     ClientRepository clientRepository;
-
+    @PreAuthorize("hasAnyAuthority('PRODUCT','ADMIN')")
     @GetMapping("/client")
     public String clientMain(Model model) {
         Iterable<Client> clients = clientRepository.findAll();

@@ -4,6 +4,7 @@ import com.example.itlittlecrm.models.ProductTypes;
 import com.example.itlittlecrm.repo.ProductTypesRepository;
 import com.example.itlittlecrm.repo.ProductsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +20,7 @@ public class ProductTypesController {
     ProductsRepository productsRepository;
 
     @GetMapping("/types")
+    @PreAuthorize("hasAnyAuthority('PRODUCT','ADMIN')")
     public String typesMain(Model model) {
         Iterable<ProductTypes> productTypes = productTypesRepository.findAll();
         model.addAttribute("productTypes", productTypes);

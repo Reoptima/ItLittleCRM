@@ -50,7 +50,7 @@
                 </div>
                 <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm font-medium text-gray-500">Email</dt>
-                    <input th:field="*{email}" type="text" name="email" autocomplete="none"
+                    <input th:field="*{email}" type="email" name="email" autocomplete="none"
                            placeholder="Введите почту"
                            required
                            class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
@@ -85,13 +85,14 @@
                                                class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
                                     </div>
                                     <div class="ml-2 text-sm">
-                                        <label for="checkbox-item-4" class="font-medium text-gray-900 dark:text-gray-300">
+                                        <label for="checkbox-item-4"
+                                               class="font-medium text-gray-900 dark:text-gray-300">
                                             <div th:text="${role.name}"></div>
-<!--                                            <p id="helper-checkbox-text-1" class="text-xs font-normal text-gray-500 dark:text-gray-300">Роль</p>-->
+                                            <!--                                            <p id="helper-checkbox-text-1" class="text-xs font-normal text-gray-500 dark:text-gray-300">Роль</p>-->
                                         </label>
-<!--                                        <label for="checkbox-item-4"-->
-<!--                                               class="ml-2 w-full text-sm font-medium text-gray-900 rounded dark:text-gray-300"-->
-<!--                                               th:text="${role.name}"></label>-->
+                                        <!--                                        <label for="checkbox-item-4"-->
+                                        <!--                                               class="ml-2 w-full text-sm font-medium text-gray-900 rounded dark:text-gray-300"-->
+                                        <!--                                               th:text="${role.name}"></label>-->
                                     </div>
                                 </div>
                             </li>
