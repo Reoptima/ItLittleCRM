@@ -17,27 +17,36 @@
         <div class="border-t border-gray-200">
             <dl>
                 <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500">услуга</dt>
+                    <select th:field="*{products}">
+                        <option th:each="products : ${productsIterable}"
+                                th:value="${products.id}"
+                                th:text="${products.productName}">
+                        </option>
+                    </select>
+                </div>
+                <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm font-medium text-gray-500">Название</dt>
-                    <input th:field="*{saleName}" type="text" autocomplete="none" placeholder="Введите логин"
+                    <input th:field="*{saleName}" type="text" autocomplete="none" placeholder="Введите название"
                            required
                            class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                 </div>
 
                 <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm font-medium text-gray-500">Цена</dt>
-                    <input th:field="*{salePrice}" type="number" autocomplete="none" placeholder="Введите логин"
+                    <input th:field="*{salePrice}" type="number" autocomplete="none" placeholder="Введите цену"
                            required
                            class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                 </div>
                 <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm font-medium text-gray-500">Дата</dt>
-                    <input th:field="*{saleDate}" type="date" autocomplete="none" placeholder="Введите логин"
+                    <input th:field="*{saleDate}" type="date" autocomplete="none" placeholder="Введите дату"
                            required
                            class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                 </div>
                 <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm font-medium text-gray-500">Кол-во</dt>
-                    <input th:field="*{saleAmount}" type="number" autocomplete="none" placeholder="Введите логин"
+                    <input th:field="*{saleAmount}" type="number" autocomplete="none" placeholder="Введите кол-во"
                            required
                            class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
                 </div>

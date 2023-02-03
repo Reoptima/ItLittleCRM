@@ -12,19 +12,25 @@ public class DumpRestoreService {
 
         String[] config = loadConfig();
 
-//        String executeCmd = String.format("mysqldump -h %s -P %s -B %s -p%s -u %s --set-gtid-purged=OFF --add-drop-database --opt --single-transaction -r %s", config[0], config[1], config[2], config[4], config[3], fileName);
-        String executeCmd = String.format("mysqldump -h %s -P %s -B %s -u %s --set-gtid-purged=OFF --add-drop-database --opt --single-transaction -r %s", config[0], config[1], config[2], config[3], fileName);
-
+        String executeCmd = String.format(
+                "mysqldump -h %s -P %s -B %s -u %s --set-gtid-purged=OFF --add-drop-database --opt --single-transaction -r %s",
+                config[0],
+                config[1],
+                config[2],
+                config[3],
+                fileName);
         DumpRestoreService.exec(executeCmd);
     }
 
     public static void restore(String fileName) throws IOException, InterruptedException {
-
         String[] config = loadConfig();
-
-//        String executeCmd = String.format("mysql -h %s -P %s -B %s -p%s -u %s < %s", config[0], config[1], config[2], config[4], config[3], fileName);
-        String executeCmd = String.format("mysql -h %s -P %s -B %s -u %s < %s", config[0], config[1], config[2], config[3], fileName);
-
+        String executeCmd = String.format(
+                "mysql -h %s -P %s -B %s -u %s < %s",
+                config[0],
+                config[1],
+                config[2],
+                config[3],
+                fileName);
         DumpRestoreService.exec(executeCmd);
     }
 

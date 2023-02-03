@@ -1,4 +1,5 @@
 package com.example.itlittlecrm.controller;
+
 import com.example.itlittlecrm.models.Role;
 import com.example.itlittlecrm.models.User;
 import com.example.itlittlecrm.repo.UserRepository;
@@ -20,16 +21,16 @@ public class RegistrationController {
     private PasswordEncoder passwordEncoder;
 
     @GetMapping("/registration")
-    public String registration(){
+    public String registration() {
         return "registration";
     }
 
     @PostMapping("/registration")
-    public String addUser(User user, Model model){
+    public String addUser(User user, Model model) {
         User userFromDb = userRepository.findByUsername(user.getUsername());
-        if(userFromDb != null)
-        {
-            model.addAttribute("message", "Пользователь с таким логином уже зарегистрирован");
+        if (userFromDb != null) {
+            model.addAttribute("message",
+                    "Пользователь с таким логином уже зарегистрирован");
             return "registration";
         }
         user.setActive(true);

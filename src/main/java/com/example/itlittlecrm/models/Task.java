@@ -1,9 +1,12 @@
 package com.example.itlittlecrm.models;
 
 import com.example.itlittlecrm.interfaces.IExelExport;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.PastOrPresent;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -22,6 +25,10 @@ public class Task implements IExelExport {
     private Set<Comments> comments;
 
     private String taskName, taskText, taskStatus, taskDeadline;
+
+//    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+//    @PastOrPresent
+//    public Date taskDeadLine;
 
     public String getStatusName() {
         switch (taskStatus) {

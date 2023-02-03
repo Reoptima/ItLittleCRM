@@ -16,6 +16,18 @@ public class Sales {
     @JoinColumn(name = "user_id")
     private User users;
 
+    public Products getProducts() {
+        return products;
+    }
+
+    public void setProducts(Products products) {
+        this.products = products;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Products products;
+
     private String saleName, salePrice, saleDate;
     private int saleAmount;
 
@@ -43,14 +55,6 @@ public class Sales {
         this.clients = clients;
     }
 
-    public String getSaleName() {
-        return saleName;
-    }
-
-    public void setSaleName(String saleName) {
-        this.saleName = saleName;
-    }
-
     public String getSalePrice() {
         return salePrice;
     }
@@ -73,5 +77,13 @@ public class Sales {
 
     public void setSaleAmount(int saleAmount) {
         this.saleAmount = saleAmount;
+    }
+
+    public String getSaleName() {
+        return saleName;
+    }
+
+    public void setSaleName(String saleName) {
+        this.saleName = saleName;
     }
 }

@@ -1,6 +1,7 @@
 package com.example.itlittlecrm.models;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Products {
@@ -11,6 +12,17 @@ public class Products {
     @ManyToOne
     @JoinColumn(name = "product_type_id")
     private ProductTypes productType;
+
+    public Set<Sales> getSales() {
+        return sales;
+    }
+
+    public void setSales(Set<Sales> sales) {
+        this.sales = sales;
+    }
+
+    @OneToMany(mappedBy = "products", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Sales> sales;
 
     private String productName;
 

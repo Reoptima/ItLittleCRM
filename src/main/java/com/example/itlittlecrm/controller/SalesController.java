@@ -44,13 +44,13 @@ public class SalesController {
     private String getString(Model model) {
         Iterable<Sales> sale = salesRepository.findAll();
         Iterable<User> users = userRepository.findAll();
-        Iterable<Products> products = productsRepository.findAll();
+        Iterable<Products> productsIterable = productsRepository.findAll();
         Iterable<Client> clients = clientRepository.findAll();
         model.addAttribute("clients", clients);
         model.addAttribute("sales", sale);
         model.addAttribute("sale", new Sales());
         model.addAttribute("users", users);
-        model.addAttribute("products", products);
+        model.addAttribute("productsIterable", productsIterable);
         return "Sales/sales-add";
     }
 
