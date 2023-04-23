@@ -92,7 +92,6 @@ public class TaskController {
 
         Task[] tasks = Iterables.toArray(taskRepository.findAll(), Task.class);
 
-
         ExelExport exelExport = new ExelExport(tasks);
         exelExport.generateExcelFile(response);
     }

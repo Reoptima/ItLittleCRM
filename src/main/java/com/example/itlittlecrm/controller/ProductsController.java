@@ -63,8 +63,9 @@ public class ProductsController {
     }
 
     @GetMapping("/products/{products}/edit")
-    private String productEdit(Products products) {
-//        Iterable<ProductTypes> productTypesIterable = productTypesRepository.findAll();
+    private String productEdit(Products products, Model model) {
+        Iterable<ProductTypes> productTypesIterable = productTypesRepository.findAll();
+        model.addAttribute("productTypesIterable", productTypesIterable);
         return "Products/products-edit";
     }
 

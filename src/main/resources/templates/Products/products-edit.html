@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ru">
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -31,7 +30,7 @@
                             <label class="block text-gray-700 text-sm font-bold mb-2">Прикрепить к проекту</label>
                             <div>
                                 <select th:field="*{productType}">
-                                    <option th:each="productType : ${productTypesIterable}"
+                                    <option th:each="productType : ${productTypes}"
                                             th:value="${productType.id}"
                                             th:text="${productType.productTypeName}">
                                     </option>

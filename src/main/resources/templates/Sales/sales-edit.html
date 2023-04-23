@@ -6,7 +6,8 @@
 </head>
 <body>
 <div th:insert="header">...</div>
-<form th:action="${'/sales/'+sale.id+'/edit'}" method="post" th:object="${sale}">
+<form th:action="${'/sales/'+sale.id+'/edit'}" method="post"
+      th:object="${sale}">
     <div style="color: red" th:if="${#fields.hasErrors('saleName')}" th:errors="*{saleName}"></div>
 
     <div class="overflow-hidden bg-white shadow sm:rounded-lg">
@@ -19,7 +20,7 @@
                 <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-sm font-medium text-gray-500">услуга</dt>
                     <select th:field="*{products}">
-                        <option th:each="products : ${productsIterable}"
+                        <option th:each="products : ${products}"
                                 th:value="${products.id}"
                                 th:text="${products.productName}">
                         </option>

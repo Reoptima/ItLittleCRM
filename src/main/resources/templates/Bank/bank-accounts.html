@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark')
+        }
+    </script>
+    <meta charset="UTF-8">
+    <title>Счета</title>
+</head>
+<div th:insert="header">...</div>
+<body class="dark:bg-gray-800">
+
+<div class="relative overflow-x-auto shadow-md">
+    <table id="account-list" class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <caption class="p-5 text-lg font-semibold text-left text-gray-800 bg-white dark:text-white dark:bg-gray-900">
+            Ваши счета
+            <p class="mt-1 mb-1 text-sm font-normal text-gray-500 dark:text-gray-400">На данной странице вы можете
+                просмотреть ваши счета, на данный момент можно создать счёт в USD и RUB<br>Обратите внимание, что
+                перевод средств из одной валюты в другую недоступен.</p>
+            <div class="text-left">
+                <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                        type="button" data-drawer-target="drawer-transfer" data-drawer-placement="right"
+                        data-drawer-show="drawer-transfer"
+                        aria-controls="drawer-transfer">
+                    Выполнить перевод
+                </button>
+            </div>
+        </caption>
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-900 dark:text-gray-400">
+        <tr>
+            <th scope="col" class="px-6 py-3">
+                Номер счёта
+            </th>
+            <th scope="col" class="px-6 py-3">
+                Валюта
+            </th>
+            <th scope="col" class="px-6 py-3">
+                Баланс
+            </th>
+            <th scope="col" class="px-6 py-3">
+                Создан
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+<!-- drawer init and show -->
+<div class="text-left">
+    <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+            type="button" data-drawer-target="drawer-contact" data-drawer-show="drawer-contact"
+            aria-controls="drawer-contact">
+        Создать новый счёт
+    </button>
+</div>
+
+<!-- drawer component -->
+<div id="drawer-transfer"
+     class="fixed top-0 right-0 z-40 h-screen p-4 overflow-y-auto transition-transform translate-x-full bg-white w-80 dark:bg-gray-800"
+     tabindex="-1" aria-labelledby="drawer-contact-label">
+    <h5 id="drawer-label1"
+        class="inline-flex items-center mb-6 text-base font-semibold text-gray-500 uppercase dark:text-gray-400">
+        <svg class="w-5 h-5 mr-2" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+             xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                  clip-rule="evenodd"></path>
+        </svg>
+        Перевод средств
+    </h5>
+    <button type="button" data-drawer-hide="drawer-contact" aria-controls="drawer-contact"
+            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 right-2.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
+        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+             xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  clip-rule="evenodd"></path>
+        </svg>
+        <span class="sr-only">Close menu</span>
+    </button>
+    <form id="transfer-form" class="mb-6">
+        <label id="error_message1" for="currency" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Заполните
+            все поля</label>
+        <div class="mb-6">
+            <label for="tr_from" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Списать со
+                счёта</label>
+            <input type="number" id="tr_from"
+                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                   placeholder="1" required>
+        </div>
+        <div class="mb-6">
+            <label for="tr_to" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Счёт
+                получателя</label>
+            <input type="number" id="tr_to"
+                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                   placeholder="2" required>
+        </div>
+        <div class="mb-6">
+            <label for="tr_amount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Сумма</label>
+            <input type="number" id="tr_amount"
+                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                   placeholder="100" required>
+        </div>
+        <select id="tr_currency" name="tr_currency"
+                class="bg-gray-50 mb-6 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option value="RUB" selected>Рубли</option>
+            <option value="USD">Доллары</option>
+        </select>
+        <button type="submit"
+                class="text-white bg-blue-700 hover:bg-blue-800 w-full focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 block">
+            Перевести
+        </button>
+    </form>
+</div>
+
+<!-- drawer component -->
+<div id="drawer-contact"
+     class="fixed top-0 left-0 z-40 h-screen p-4 overflow-y-auto transition-transform -translate-x-full bg-white w-80 dark:bg-gray-800"
+     tabindex="-1" aria-labelledby="drawer-contact-label">
+    <h5 id="drawer-label"
+        class="inline-flex items-center mb-6 text-base font-semibold text-gray-500 uppercase dark:text-gray-400">
+        <svg class="w-5 h-5 mr-2" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+             xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                  clip-rule="evenodd"></path>
+        </svg>
+        Создание счёта
+    </h5>
+    <button type="button" data-drawer-hide="drawer-contact" aria-controls="drawer-contact"
+            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 right-2.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
+        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+             xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  clip-rule="evenodd"></path>
+        </svg>
+        <span class="sr-only">Close menu</span>
+    </button>
+    <form id="account-form" class="mb-6">
+        <label id="error_message" for="currency" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Валюта
+            счёта</label>
+        <select id="currency" name="currency"
+                class="bg-gray-50 mb-6 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option value="RUB" selected>Рубли</option>
+            <option value="USD">Доллары</option>
+        </select>
+        <button type="submit"
+                class="text-white bg-blue-700 hover:bg-blue-800 w-full focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 block">
+            Создать счёт
+        </button>
+    </form>
+</div>
+
+<script>
+    const accountForm = document.getElementById("account-form");
+
+    accountForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const token = localStorage.getItem("access_token");
+        const currency = document.getElementById("currency").value;
+
+        fetch("http://localhost:8083/accounts", {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({currency: currency})
+        })
+            .then(response => {
+                if (response.ok) {
+                    response.json().then(data => {
+                        console.log(data);
+                        location.reload()
+                    });
+                } else if (response.status === 403) {
+                    document.getElementById("error_message").textContent = "Такой счёт уже есть";
+                }
+            })
+            .catch(error => console.log(error));
+    });
+</script>
+
+<script>
+    const transferForm = document.getElementById("transfer-form");
+
+    transferForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const tr_token = localStorage.getItem("access_token");
+        const tr_currency = document.getElementById("tr_currency").value;
+        const tr_from = document.getElementById("tr_from").value;
+        const tr_to = document.getElementById("tr_to").value;
+        const tr_amount = document.getElementById("tr_amount").value;
+
+        fetch("http://localhost:8083/transfers", {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${tr_token}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                currency: String(tr_currency),
+                from_account_id: Number(tr_from),
+                to_account_id: Number(tr_to),
+                amount: Number(tr_amount),
+            })
+        })
+            .then(response => {
+                if (response.ok) {
+                    response.json().then(data => {
+                        console.log(data);
+                        location.reload()
+                    });
+                } else if (response.status === 403) {
+                    document.getElementById("error_message1").textContent = "Такой счёт уже есть";
+                }
+            })
+            .catch(error => console.log(error));
+    });
+</script>
+
+<script>
+    // Get access token from local storage
+    const token = localStorage.getItem("access_token");
+
+    // Send GET request to the server
+    fetch("http://localhost:8083/accounts?page_id=1&page_size=5", {
+        method: "GET",
+        headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            // Print response to the console
+            console.log(data);
+
+            // Render data to the table
+            const accountList = document.getElementById("account-list");
+            const tbody = accountList.querySelector("tbody");
+            for (const account of data) {
+                const tr = document.createElement("tr");
+                tr.classList.add("bg-white", "border-b", "dark:bg-gray-900", "dark:border-gray-700");
+                tr.innerHTML = `
+        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">${account.id}</th>
+        <td class="px-6 py-4">${account.currency}</td>
+        <td class="px-6 py-4">${account.balance}</td>
+        <td class="px-6 py-4">${account.created_at}</td>
+    `;
+                tbody.appendChild(tr);
+            }
+        })
+        .catch(error => console.log(error));
+</script>
+
+</body>
+</html>
