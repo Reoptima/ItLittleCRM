@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+  </script>
+    <meta charset="UTF-8">
+  <script src="https://cdn.jsdelivr.net/npm/@editorjs/header@2.7.0/dist/bundle.min.js"></script> <!-- Headers -->
+  <script src="https://cdn.jsdelivr.net/npm/@editorjs/link@2.5.0/dist/bundle.min.js"></script> <!-- links preview -->
+  <script src="https://cdn.jsdelivr.net/npm/@editorjs/embed@2.5.3/dist/bundle.min.js"></script> <!-- embed socials -->
+  <script src="https://cdn.jsdelivr.net/npm/@editorjs/quote@2.5.0/dist/bundle.min.js"></script> <!-- quote -->
+  <script src="https://cdn.jsdelivr.net/npm/@calumk/editorjs-nested-checklist@latest"></script> <!-- checklists -->
+  <script src="https://cdn.jsdelivr.net/npm/editorjs-alert@latest"></script> <!-- alert -->
+  <script src="https://cdn.jsdelivr.net/npm/editorjs-inline-image@1.2.4/dist/bundle.min.js"></script>
+  <!-- image add -->
+  <script src="https://cdn.jsdelivr.net/npm/editorjs-drag-drop"></script> <!-- Drag and drop -->
+  <script src="https://cdn.jsdelivr.net/npm/editorjs-undo"></script> <!-- Undo -->
+  <script src="https://cdn.jsdelivr.net/npm/editorjs-tooltip"></script> <!-- Tooltip -->
+  <script src="https://cdn.jsdelivr.net/npm/editorjs-toggle-block"></script> <!-- Toggle block -->
+  <script src="https://cdn.jsdelivr.net/npm/@editorjs/inline-code@1.4.0/dist/bundle.min.js"></script>
+  <!--inline code -->
+  <script src="https://cdn.jsdelivr.net/gh/paraswaykole/editor-js-code@latest/dist/bundle.js"></script> <!--code -->
+    <title>Новости</title>
+</head>
+<div th:insert="header">...</div>
+<body>
+<div class="content" id="editorjs"></div>
+<script src="/editor.js"></script>
+<script>
+    // Fetch the news data from your API endpoint
+    const token = localStorage.getItem("access_token");
+    var datatext
+    fetch('http://localhost:8083/news?page_id=1&page_size=5', {
+        method: 'GET',
+        headers: {
+            "Authorization": `Bearer ${token}`
+        },
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data);
+            data.forEach((item) => {
+                const textData = JSON.parse(item.text);
+                createEditor(textData);
+            });
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+
+    function createEditor(data) {
+        const editor = new EditorJS({
+            onReady: () => {
+                new Undo({editor});
+                new DragDrop(editor);
+            },
+            holder: 'editorjs',
+            readOnly: true,
+            tools: {
+                header: {
+                    class: Header,
+                    config: {
+                        placeholder: 'Введите заголовок',
+                        levels: [2, 3, 4],
+                        defaultLevel: 3
+                    }
+                },
+                nestedchecklist: editorjsNestedChecklist,
+                linkTool: {
+                    class: LinkTool,
+                    config: {
+                        endpoint: 'http://localhost:8081/fetchUrl', // Your backend endpoint for url data fetching,
+                    }
+                },
+                image: {
+                    class: InlineImage,
+                    inlineToolbar: true,
+                    config: {
+                        embed: {
+                            display: true,
+                        },
+                        unsplash: {
+                            appName: 'your_app_name',
+                            clientId: 'your_client_id'
+                        }
+                    }
+                },
+                embed: {
+                    class: Embed,
+                    inlineToolbar: true,
+                    config: {
+                        services: {
+                            youtube: true,
+                            twitter: true,
+                            miro: true,
+                            imgur: true,
+                        }
+                    }
+                },
+                quote: {
+                    class: Quote,
+                    inlineToolbar: true,
+                    shortcut: 'CMD+SHIFT+O',
+                    config: {
+                        quotePlaceholder: 'Введите цитату',
+                        captionPlaceholder: 'Автор',
+                    },
+                },
+                alert: {
+                    class: Alert,
+                    inlineToolbar: true,
+                    shortcut: 'CMD+SHIFT+A',
+                    config: {
+                        defaultType: 'primary',
+                        messagePlaceholder: 'Введите текст',
+                    },
+                },
+                toggle: {
+                    class: ToggleBlock,
+                    inlineToolbar: true,
+                },
+                inlineCode: {
+                    class: InlineCode,
+                    shortcut: 'CMD+SHIFT+M',
+                },
+            },
+            data: data // Pass the data from the API to the EditorJS instance
+        });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/header@2.7.0/dist/bundle.min.js"></script> <!-- Headers -->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/link@2.5.0/dist/bundle.min.js"></script> <!-- links preview -->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/embed@2.5.3/dist/bundle.min.js"></script> <!-- embed socials -->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/quote@2.5.0/dist/bundle.min.js"></script> <!-- quote -->
+    <script src="https://cdn.jsdelivr.net/npm/@calumk/editorjs-nested-checklist@latest"></script> <!-- checklists -->
+    <script src="https://cdn.jsdelivr.net/npm/editorjs-alert@latest"></script> <!-- alert -->
+    <script src="https://cdn.jsdelivr.net/npm/editorjs-inline-image@1.2.4/dist/bundle.min.js"></script>
+    <!-- image add -->
+    <script src="https://cdn.jsdelivr.net/npm/editorjs-drag-drop"></script> <!-- Drag and drop -->
+    <script src="https://cdn.jsdelivr.net/npm/editorjs-undo"></script> <!-- Undo -->
+    <script src="https://cdn.jsdelivr.net/npm/editorjs-tooltip"></script> <!-- Tooltip -->
+    <script src="https://cdn.jsdelivr.net/npm/editorjs-toggle-block"></script> <!-- Toggle block -->
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/inline-code@1.4.0/dist/bundle.min.js"></script>
+    <!--inline code -->
+    <script src="https://cdn.jsdelivr.net/gh/paraswaykole/editor-js-code@latest/dist/bundle.js"></script> <!--code -->
+    <title>Заголовок</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        .content {
+            padding-bottom: 50px;
+            /* Дополнительные стили для основного контента */
+        }
+
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            z-index: 10;
+            height: 50px; /* Высота футера */
+            background-color: #f2f2f2;
+            /* Дополнительные стили для футера */
+        }
+
+        .button {
+            /* Стили для кнопки */
+            margin-left: calc(50% - 50px); /* Выравнивание кнопки по центру */
+            margin-top: 10px;
+            /* Отступ кнопки внутри футера */
+            /* Дополнительные стили для кнопки */
+        }
+    </style>
+</head>
+<body>
+<div th:insert="header">...</div>
+<div class="content" id="editorjs"></div>
+<script src="/editor.js"></script>
+<script>
+    const editor = new EditorJS({
+        onReady: () => {
+            new Undo({editor});
+            new DragDrop(editor);
+        },
+        holder: 'editorjs',
+        tools: {
+            tooltip: {
+                class: Tooltip,
+                config: {
+                    location: 'left',
+                    highlightColor: '#FFEFD5',
+                    underline: true,
+                    backgroundColor: '#154360',
+                    textColor: '#FDFEFE',
+                    holder: 'editorjs',
+                }
+            },
+            header: {
+                class: Header,
+                config: {
+                    placeholder: 'Введите заголовок',
+                    levels: [2, 3, 4],
+                    defaultLevel: 3
+                }
+            },
+            nestedchecklist: editorjsNestedChecklist,
+            linkTool: {
+                class: LinkTool,
+                config: {
+                    endpoint: 'http://localhost:8081/fetchUrl', // Your backend endpoint for url data fetching,
+                }
+            },
+            image: {
+                class: InlineImage,
+                inlineToolbar: true,
+                config: {
+                    embed: {
+                        display: true,
+                    },
+                    unsplash: {
+                        appName: 'your_app_name',
+                        clientId: 'your_client_id'
+                    }
+                }
+            },
+            embed: {
+                class: Embed,
+                inlineToolbar: true,
+                config: {
+                    services: {
+                        youtube: true,
+                        twitter: true,
+                        miro: true,
+                        imgur: true,
+                    }
+                }
+            },
+            quote: {
+                class: Quote,
+                inlineToolbar: true,
+                shortcut: 'CMD+SHIFT+O',
+                config: {
+                    quotePlaceholder: 'Введите цитату',
+                    captionPlaceholder: 'Автор',
+                },
+            },
+            alert: {
+                class: Alert,
+                inlineToolbar: true,
+                shortcut: 'CMD+SHIFT+A',
+                config: {
+                    defaultType: 'primary',
+                    messagePlaceholder: 'Введите текст',
+                },
+            },
+            toggle: {
+                class: ToggleBlock,
+                inlineToolbar: true,
+            },
+            inlineCode: {
+                class: InlineCode,
+                shortcut: 'CMD+SHIFT+M',
+            },
+            code: CodeTool,
+
+        },
+        data: {}
+    });
+</script>
+<div class="footer">
+    <button onclick="saveArticle()"
+            class="button text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+        Blue
+    </button>
+    <script>
+        function saveArticle() {
+            editor.save().then((outputData) => {
+                console.log('Article data: ', JSON.stringify(outputData));
+                fetch('http://localhost:8083/news', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        text: outputData
+                    })
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            console.log('Data saved successfully');
+                        } else {
+                            console.log('Failed to save data');
+                        }
+                    })
+            }).catch((error) => {
+                console.log('Saving failed: ', error);
+            });
+        }
+    </script>
+</div>
+</body>
+</html>

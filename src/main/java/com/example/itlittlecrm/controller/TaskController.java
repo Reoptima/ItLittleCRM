@@ -64,18 +64,18 @@ public class TaskController {
     }
 
     @PostMapping("/tasks/{id}/edit")
-    public String taskPostEdit(@ModelAttribute("Task") @Valid Task task, BindingResult bindingResult, Model model) {
+    public String taskPostEdit(@ModelAttribute("Task") @Valid Task task, String redirect, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return "Task/task-edit";
         }
         taskRepository.save(task);
-        return "redirect:/project/";
+        return "redirect:" + redirect;
     }
 
     @PostMapping("/tasks/{id}/delete")
-    public String taskDelete(Task task) {
+    public String taskDelete(Task task, String redirect) {
         taskRepository.delete(task);
-        return "redirect:/project/";
+        return "redirect:" + redirect;
     }
 
     @GetMapping("/task/export")
